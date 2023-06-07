@@ -23,9 +23,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let profileViewController = ProfileViewController()
         profileViewController.title = "Профиль"
-        profileViewController.view.backgroundColor = .white
         
         let tabBarController = UITabBarController()
+        tabBarController.tabBar.backgroundColor = .white
         
         feedViewController.tabBarItem = UITabBarItem(title: "Лента", image: UIImage(systemName: "rectangle.stack.fill"), tag: 0)
         profileViewController.tabBarItem = UITabBarItem(title: "Профиль", image: UIImage(systemName: "person.fill"), tag: 1)

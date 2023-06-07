@@ -18,6 +18,7 @@
 		610BE1D12A27BF19005E7CD1 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 610BE1D02A27BF19005E7CD1 /* Post.swift */; };
 		610BE1D32A2B54FE005E7CD1 /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 610BE1D22A2B54FE005E7CD1 /* InfoViewController.swift */; };
 		610BE1D52A2B55F8005E7CD1 /* ExtensionUIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 610BE1D42A2B55F8005E7CD1 /* ExtensionUIViewController.swift */; };
+		61F130422A30A96200E27506 /* ProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61F130412A30A96200E27506 /* ProfileHeaderView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +35,7 @@
 		610BE1D02A27BF19005E7CD1 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		610BE1D22A2B54FE005E7CD1 /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
 		610BE1D42A2B55F8005E7CD1 /* ExtensionUIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionUIViewController.swift; sourceTree = "<group>"; };
+		61F130412A30A96200E27506 /* ProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,10 +68,10 @@
 		610BE1B52A265BCB005E7CD1 /* Navigation */ = {
 			isa = PBXGroup;
 			children = (
+				61F130402A30A91400E27506 /* Profile */,
 				610BE1CE2A2790B8005E7CD1 /* PostViewController.swift */,
 				610BE1B62A265BCB005E7CD1 /* AppDelegate.swift */,
 				610BE1B82A265BCB005E7CD1 /* SceneDelegate.swift */,
-				610BE1CC2A26FCEE005E7CD1 /* ProfileViewController.swift */,
 				610BE1BA2A265BCB005E7CD1 /* ViewController.swift */,
 				610BE1CA2A26FCCA005E7CD1 /* FeedViewController.swift */,
 				610BE1BF2A265BCD005E7CD1 /* Assets.xcassets */,
@@ -80,6 +82,15 @@
 				610BE1D42A2B55F8005E7CD1 /* ExtensionUIViewController.swift */,
 			);
 			path = Navigation;
+			sourceTree = "<group>";
+		};
+		61F130402A30A91400E27506 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				610BE1CC2A26FCEE005E7CD1 /* ProfileViewController.swift */,
+				61F130412A30A96200E27506 /* ProfileHeaderView.swift */,
+			);
+			path = Profile;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -159,6 +170,7 @@
 				610BE1B72A265BCB005E7CD1 /* AppDelegate.swift in Sources */,
 				610BE1CD2A26FCEE005E7CD1 /* ProfileViewController.swift in Sources */,
 				610BE1CB2A26FCCA005E7CD1 /* FeedViewController.swift in Sources */,
+				61F130422A30A96200E27506 /* ProfileHeaderView.swift in Sources */,
 				610BE1D32A2B54FE005E7CD1 /* InfoViewController.swift in Sources */,
 				610BE1B92A265BCB005E7CD1 /* SceneDelegate.swift in Sources */,
 			);

@@ -9,6 +9,8 @@ import UIKit
 
 class FeedViewController: UIViewController {
 
+    // MARK: - Custom elements
+    
     private lazy var showButton: UIButton = {
         return createButton(title: "Показать пост", color: .systemBlue, selector: #selector(buttonPressed(_:)))
     }()
@@ -18,6 +20,8 @@ class FeedViewController: UIViewController {
         view.addSubview(showButton)
         setupConstraint()
     }
+    
+    // MARK: - UI Drawing
     
     func setupConstraint() {
         
@@ -35,6 +39,8 @@ class FeedViewController: UIViewController {
             showButton.heightAnchor.constraint(equalToConstant: 44.0)
         ])
     }
+    
+    // MARK: - Selectors
     
     @objc func buttonPressed(_ sender: UIButton) {
     
