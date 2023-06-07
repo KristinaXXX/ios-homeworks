@@ -14,12 +14,14 @@ class FeedViewController: UIViewController {
     }()
 
     override func viewDidLoad() {
-        
         super.viewDidLoad()
-        let safeAreaLayoutGuide = view.safeAreaLayoutGuide
-        
         view.addSubview(showButton)
-        //привязка constraint
+        setupConstraint()
+    }
+    
+    func setupConstraint() {
+        
+        let safeAreaLayoutGuide = view.safeAreaLayoutGuide
         NSLayoutConstraint.activate([
             showButton.leadingAnchor.constraint(
                 equalTo: safeAreaLayoutGuide.leadingAnchor,
@@ -32,7 +34,6 @@ class FeedViewController: UIViewController {
             showButton.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor),
             showButton.heightAnchor.constraint(equalToConstant: 44.0)
         ])
-
     }
     
     @objc func buttonPressed(_ sender: UIButton) {
@@ -42,7 +43,6 @@ class FeedViewController: UIViewController {
         navigationController?.pushViewController(postViewController, animated: true)
         
     }
-
 }
 
 
