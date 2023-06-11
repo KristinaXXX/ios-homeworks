@@ -74,17 +74,20 @@ class ProfileHeaderView: UIView {
         return textField
     }()
     
-    // MARK: - UI Drawing
+    // MARK: - UI Loading
     
-    override func draw(_ rect: CGRect) {
-
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         addSubview(fullNameLabel)
         addSubview(profileImage)
         addSubview(statusLabel)
         addSubview(showButton)
         addSubview(statusTextField)
         setupConstraint()
-
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     private func setupConstraint() {

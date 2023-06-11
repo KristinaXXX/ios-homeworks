@@ -30,22 +30,5 @@ class ProfileViewController: UIViewController {
         super.viewWillLayoutSubviews()
         profileHeaderView.frame = view.frame
     }
-    
-    func setupConstraint() {
-        
-        let safeAreaLayoutGuide = view.safeAreaLayoutGuide
-        NSLayoutConstraint.activate([
-            profileHeaderView.leadingAnchor.constraint(
-                equalTo: safeAreaLayoutGuide.leadingAnchor,
-                constant: 0.0
-            ),
-            profileHeaderView.trailingAnchor.constraint(
-                equalTo: safeAreaLayoutGuide.trailingAnchor,
-                constant: 0.0
-            ),
-            profileHeaderView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor),
-            profileHeaderView.heightAnchor.constraint(equalToConstant: 10)
-        ])
-    }
 
 }
