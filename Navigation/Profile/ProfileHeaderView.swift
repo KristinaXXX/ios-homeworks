@@ -93,10 +93,7 @@ class ProfileHeaderView: UIView {
     private func setupConstraint() {
         
         NSLayoutConstraint.activate([
-            fullNameLabel.topAnchor.constraint(
-                equalTo: safeAreaLayoutGuide.topAnchor,
-                constant: 27.0
-            ),
+            fullNameLabel.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 27.0),
             fullNameLabel.leadingAnchor.constraint(equalTo: profileImage.trailingAnchor, constant: 16.0),
             profileImage.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 16.0),
             profileImage.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 16.0),
@@ -104,7 +101,7 @@ class ProfileHeaderView: UIView {
             profileImage.widthAnchor.constraint(equalToConstant: 110.0),
             showButton.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 16.0),
             showButton.topAnchor.constraint(equalTo: profileImage.bottomAnchor, constant: 60.0),
-            showButton.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16.0),
+            showButton.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16),
             showButton.heightAnchor.constraint(equalToConstant: 50.0),
             statusLabel.bottomAnchor.constraint(equalTo: statusTextField.topAnchor, constant: -16.0),
             statusLabel.leadingAnchor.constraint(equalTo: fullNameLabel.leadingAnchor),
