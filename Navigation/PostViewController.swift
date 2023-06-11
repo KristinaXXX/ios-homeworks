@@ -10,9 +10,15 @@ import UIKit
 class PostViewController: UIViewController {
     
     var post: Post?
+    
+    // MARK: - Custom elements
+    
     private lazy var infoBarButtonItem: UIBarButtonItem = {
         return createTabButton(imageName: "info", selector: #selector(infobuttonPressed(_:)))
     }()
+    
+    
+    // MARK: - UI Drawing
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,6 +29,9 @@ class PostViewController: UIViewController {
 
         navigationItem.rightBarButtonItems = [infoBarButtonItem]
     }
+    
+    
+    // MARK: - Selectors
     
     @objc func infobuttonPressed(_ sender: UIButton) {
        
