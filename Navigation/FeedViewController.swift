@@ -11,43 +11,56 @@ class FeedViewController: UIViewController {
 
     // MARK: - Custom elements
     
-    private lazy var showButton: UIButton = {
-        return createButton(title: "Показать пост", color: .systemBlue, selector: #selector(buttonPressed(_:)))
+    private lazy var showPost1: UIButton = {
+        return createButton(title: "Post #1", color: .systemBlue, selector: #selector(showPost(_:)))
+    }()
+    private lazy var showPost2: UIButton = {
+        return createButton(title: "Post #2", color: .systemBlue, selector: #selector(showPost(_:)))
+    }()
+    
+    private lazy var stackFeeds: UIStackView = {
+        let stackView = UIStackView()
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.clipsToBounds = true
+        
+        stackView.axis = .vertical
+        stackView.distribution = .fillEqually
+        stackView.alignment = .fill
+        stackView.spacing = 10.0
+        
+        stackView.addArrangedSubview(showPost1)
+        stackView.addArrangedSubview(showPost2)
+        return stackView
     }()
 
+    // MARK: - UI Drawing
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.addSubview(showButton)
-        setupConstraint()
+        addSubviews()
     }
     
-    // MARK: - UI Drawing
+    private func addSubviews() {
+        view.addSubview(stackFeeds)
+        setupConstraint()
+    }
     
     func setupConstraint() {
         
         let safeAreaLayoutGuide = view.safeAreaLayoutGuide
         NSLayoutConstraint.activate([
-            showButton.leadingAnchor.constraint(
-                equalTo: safeAreaLayoutGuide.leadingAnchor,
-                constant: 20.0
-            ),
-            showButton.trailingAnchor.constraint(
-                equalTo: safeAreaLayoutGuide.trailingAnchor,
-                constant: -20.0
-            ),
-            showButton.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor),
-            showButton.heightAnchor.constraint(equalToConstant: 44.0)
+            stackFeeds.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16.0),
+            stackFeeds.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 16.0),
+            stackFeeds.centerYAnchor.constraint(equalTo: safeAreaLayoutGuide.centerYAnchor)
         ])
     }
     
     // MARK: - Selectors
     
-    @objc func buttonPressed(_ sender: UIButton) {
-    
+    @objc func showPost(_ sender: UIButton) {
         let postViewController = PostViewController()
-        postViewController.post = Post(title: "Первый пост")
+        postViewController.post = Post(title: sender.titleLabel?.text ?? "")
         navigationController?.pushViewController(postViewController, animated: true)
-        
     }
 }
 

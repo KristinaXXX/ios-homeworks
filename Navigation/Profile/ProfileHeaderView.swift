@@ -78,16 +78,20 @@ class ProfileHeaderView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        addSubviews()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func addSubviews() {
         addSubview(fullNameLabel)
         addSubview(profileImage)
         addSubview(statusLabel)
         addSubview(showButton)
         addSubview(statusTextField)
         setupConstraint()
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
     
     private func setupConstraint() {
@@ -100,8 +104,8 @@ class ProfileHeaderView: UIView {
             profileImage.heightAnchor.constraint(equalToConstant: 110.0),
             profileImage.widthAnchor.constraint(equalToConstant: 110.0),
             showButton.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 16.0),
-            showButton.topAnchor.constraint(equalTo: profileImage.bottomAnchor, constant: 60.0),
-            showButton.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16),
+            showButton.topAnchor.constraint(equalTo: profileImage.bottomAnchor, constant: 40.0),
+            showButton.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16.0),
             showButton.heightAnchor.constraint(equalToConstant: 50.0),
             statusLabel.bottomAnchor.constraint(equalTo: statusTextField.topAnchor, constant: -16.0),
             statusLabel.leadingAnchor.constraint(equalTo: fullNameLabel.leadingAnchor),

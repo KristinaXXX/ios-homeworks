@@ -28,7 +28,8 @@ extension UIViewController {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle(title, for: .normal)
-        button.setTitleColor(color, for: .normal)
+        button.backgroundColor = color
+        button.setTitleColor(.white, for: .normal)
         button.addTarget(self, action: selector, for: .touchUpInside)
        
         return button

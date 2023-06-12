@@ -18,17 +18,17 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let window = UIWindow(windowScene: scene)
                 
         let feedViewController = FeedViewController()
-        feedViewController.title = "Лента"
+        feedViewController.title = "Feed"
         feedViewController.view.backgroundColor = .white
         
         let profileViewController = ProfileViewController()
-        profileViewController.title = "Профиль"
+        profileViewController.title = "Profile"
         
         let tabBarController = UITabBarController()
         tabBarController.tabBar.backgroundColor = .white
         
-        feedViewController.tabBarItem = UITabBarItem(title: "Лента", image: UIImage(systemName: "rectangle.stack.fill"), tag: 0)
-        profileViewController.tabBarItem = UITabBarItem(title: "Профиль", image: UIImage(systemName: "person.fill"), tag: 1)
+        feedViewController.tabBarItem = UITabBarItem(title: "Feed", image: UIImage(systemName: "rectangle.stack.fill"), tag: 0)
+        profileViewController.tabBarItem = UITabBarItem(title: "Profile", image: UIImage(systemName: "person.fill"), tag: 1)
         
         let controllers = [feedViewController, profileViewController]
         tabBarController.viewControllers = controllers.map {

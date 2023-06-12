@@ -12,7 +12,7 @@ class InfoViewController: UIViewController {
     // MARK: - Custom elements
     
     private lazy var showAlertButton: UIButton = {
-        return createButton(title: "Показать alert", color: .systemBlue, selector: #selector(buttonPressed(_:)))
+        return createButton(title: "Show alert", color: .systemBlue, selector: #selector(buttonPressed(_:)))
     }()
     
     
@@ -46,10 +46,10 @@ class InfoViewController: UIViewController {
     
     @objc func buttonPressed(_ sender: UIButton) {
     
-        let alert = UIAlertController(title: "Информация", message: "Подробная информация", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Information", message: "More information", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default, handler: { _ in print("alert - OK has pressed")
             }))
-        alert.addAction(UIAlertAction(title: NSLocalizedString("Отмена", comment: "Default action"), style: .default, handler: { _ in print("alert - cancel has pressed")
+        alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: "Default action"), style: .default, handler: { _ in print("alert - cancel has pressed")
             }))
         self.present(alert, animated: true, completion: nil)
         
