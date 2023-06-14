@@ -71,6 +71,7 @@ class ProfileHeaderView: UIView {
         textField.addTarget(self, action: #selector(statusTextChanged(_:)), for: .editingChanged)
         textField.leftView = UIView(frame: CGRect(x: self.frame.minX, y: self.frame.minY, width: 12.0, height: self.frame.height))
         textField.leftViewMode = .always
+        textField.placeholder = "Set your status.."
         return textField
     }()
     
@@ -79,6 +80,7 @@ class ProfileHeaderView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         addSubviews()
+        setupConstraint()
     }
     
     required init?(coder: NSCoder) {
@@ -91,7 +93,6 @@ class ProfileHeaderView: UIView {
         addSubview(statusLabel)
         addSubview(showButton)
         addSubview(statusTextField)
-        setupConstraint()
     }
     
     private func setupConstraint() {

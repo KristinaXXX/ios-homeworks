@@ -22,10 +22,10 @@ class InfoViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         view.addSubview(showAlertButton)
-        setupConstraint()
+        setupConstraints()
     }
     
-    func setupConstraint() {
+    func setupConstraints() {
         
         let safeAreaLayoutGuide = view.safeAreaLayoutGuide
         NSLayoutConstraint.activate([

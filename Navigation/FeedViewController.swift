@@ -38,14 +38,14 @@ class FeedViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         addSubviews()
+        setupConstraints()
     }
     
     private func addSubviews() {
         view.addSubview(stackFeeds)
-        setupConstraint()
     }
     
-    func setupConstraint() {
+    func setupConstraints() {
         
         let safeAreaLayoutGuide = view.safeAreaLayoutGuide
         NSLayoutConstraint.activate([
