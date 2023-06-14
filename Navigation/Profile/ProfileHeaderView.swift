@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Foundation
 
 class ProfileHeaderView: UIView {
 
@@ -72,6 +73,11 @@ class ProfileHeaderView: UIView {
         textField.leftView = UIView(frame: CGRect(x: self.frame.minX, y: self.frame.minY, width: 12.0, height: self.frame.height))
         textField.leftViewMode = .always
         textField.placeholder = "Set your status.."
+        
+        textField.returnKeyType = UIReturnKeyType.done
+        textField.clearButtonMode = UITextField.ViewMode.whileEditing
+        textField.contentVerticalAlignment = UIControl.ContentVerticalAlignment.center
+        textField.keyboardType = UIKeyboardType.default
         return textField
     }()
     
