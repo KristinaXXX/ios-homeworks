@@ -71,6 +71,9 @@ class LogInViewController: UIViewController {
         textField.keyboardType = UIKeyboardType.default
         textField.delegate = self
         
+        textField.layer.borderWidth = 0.5
+        textField.layer.borderColor = UIColor.lightGray.cgColor
+        
         textField.addTarget(self, action: #selector(loginTextChanged(_:)), for: .editingChanged)
         return textField
     }()
