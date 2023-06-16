@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "tuya-960x540.jpg",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

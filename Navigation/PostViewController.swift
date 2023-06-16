@@ -24,7 +24,7 @@ class PostViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .lightGray
         if post != nil {
-            title = post!.title
+            title = post!.author
         }
 
         navigationItem.rightBarButtonItems = [infoBarButtonItem]
