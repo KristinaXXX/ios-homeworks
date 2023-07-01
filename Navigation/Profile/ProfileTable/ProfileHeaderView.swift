@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Foundation
 
 class ProfileHeaderView: UIView {
 
@@ -20,6 +21,7 @@ class ProfileHeaderView: UIView {
         image.layer.borderWidth = 3
         image.layer.borderColor = UIColor.white.cgColor
         image.translatesAutoresizingMaskIntoConstraints = false
+        image.contentMode = .scaleAspectFill
         return image
     }()
     
@@ -72,6 +74,11 @@ class ProfileHeaderView: UIView {
         textField.leftView = UIView(frame: CGRect(x: self.frame.minX, y: self.frame.minY, width: 12.0, height: self.frame.height))
         textField.leftViewMode = .always
         textField.placeholder = "Set your status.."
+        
+        textField.returnKeyType = UIReturnKeyType.done
+        textField.clearButtonMode = UITextField.ViewMode.whileEditing
+        textField.contentVerticalAlignment = UIControl.ContentVerticalAlignment.center
+        textField.keyboardType = UIKeyboardType.default
         return textField
     }()
     
@@ -98,21 +105,37 @@ class ProfileHeaderView: UIView {
     private func setupConstraint() {
         
         NSLayoutConstraint.activate([
-            fullNameLabel.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 27.0),
-            fullNameLabel.leadingAnchor.constraint(equalTo: profileImage.trailingAnchor, constant: 16.0),
-            profileImage.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 16.0),
-            profileImage.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 16.0),
+            profileImage.topAnchor.constraint(equalTo: topAnchor, constant: 16.0),
+            profileImage.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16.0),
             profileImage.heightAnchor.constraint(equalToConstant: 110.0),
-            profileImage.widthAnchor.constraint(equalToConstant: 110.0),
-            showButton.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 16.0),
+            profileImage.widthAnchor.constraint(equalToConstant: 110.0)
+        ])
+        
+        NSLayoutConstraint.activate([
+            fullNameLabel.topAnchor.constraint(equalTo: topAnchor, constant: 27.0),
+            fullNameLabel.leadingAnchor.constraint(equalTo: profileImage.trailingAnchor, constant: 16.0),
+            fullNameLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16.0),
+            fullNameLabel.heightAnchor.constraint(equalToConstant: 20)
+        ])
+           
+        NSLayoutConstraint.activate([
+            showButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16.0),
             showButton.topAnchor.constraint(equalTo: profileImage.bottomAnchor, constant: 40.0),
-            showButton.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16.0),
-            showButton.heightAnchor.constraint(equalToConstant: 50.0),
+            showButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16.0),
+            showButton.heightAnchor.constraint(equalToConstant: 50.0)
+        ])
+
+        NSLayoutConstraint.activate([
             statusLabel.bottomAnchor.constraint(equalTo: statusTextField.topAnchor, constant: -16.0),
             statusLabel.leadingAnchor.constraint(equalTo: fullNameLabel.leadingAnchor),
+            statusLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16.0),
+            statusLabel.heightAnchor.constraint(equalToConstant: 20)
+        ])
+
+        NSLayoutConstraint.activate([
             statusTextField.leadingAnchor.constraint(equalTo: fullNameLabel.leadingAnchor),
             statusTextField.heightAnchor.constraint(equalToConstant: 40.0),
-            statusTextField.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16.0),
+            statusTextField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16.0),
             statusTextField.bottomAnchor.constraint(equalTo: showButton.topAnchor, constant: -16.0)
         ])
     }
@@ -121,6 +144,7 @@ class ProfileHeaderView: UIView {
     
     @objc func buttonPressed(_ sender: UIButton) {
         statusLabel.text = statusText
+        statusTextField.endEditing(true)
     }
     
     @objc func statusTextChanged(_ textField: UITextField) {

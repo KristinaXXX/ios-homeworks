@@ -59,7 +59,7 @@ class FeedViewController: UIViewController {
     
     @objc func showPost(_ sender: UIButton) {
         let postViewController = PostViewController()
-        postViewController.post = Post(title: sender.titleLabel?.text ?? "")
+        postViewController.post = Post(author: sender.titleLabel?.text ?? "")
         navigationController?.pushViewController(postViewController, animated: true)
     }
 }
