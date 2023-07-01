@@ -36,7 +36,6 @@ class ProfileTableHeaderFooterView: UITableViewHeaderFooterView {
     // MARK: - Public
 
     func update(title: String) {
-        //titleLabel.text = title
     }
     
     // MARK: - Private

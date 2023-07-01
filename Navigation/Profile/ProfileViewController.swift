@@ -12,13 +12,13 @@ class ProfileViewController: UIViewController {
     fileprivate let data = Post.make()
     // MARK: - Custom elements
     
-    private lazy var profileHeaderView: ProfileHeaderView = {
-        let view = ProfileHeaderView()
-        view.backgroundColor = .lightGray
-        view.translatesAutoresizingMaskIntoConstraints = false
-        
-        return view
-    }()
+//    private lazy var profileHeaderView: ProfileHeaderView = {
+//        let view = ProfileHeaderView()
+//        view.backgroundColor = .lightGray
+//        view.translatesAutoresizingMaskIntoConstraints = false
+//
+//        return view
+//    }()
     
     private lazy var postsTableView: UITableView = {
         let tableView = UITableView.init(
