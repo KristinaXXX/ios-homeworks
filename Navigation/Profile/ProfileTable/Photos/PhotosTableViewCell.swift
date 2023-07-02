@@ -20,6 +20,13 @@ class PhotosTableViewCell: UITableViewCell {
         return label
     }()
     
+    private lazy var arrowImage: UIImageView = {
+        let arrow = UIImageView()
+        arrow.translatesAutoresizingMaskIntoConstraints = false
+        arrow.image = UIImage(systemName: "arrow.right")?.withTintColor(.black, renderingMode: .alwaysOriginal)
+        return arrow
+    }()
+    
     private lazy var stackPhotos: UIStackView = {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -27,7 +34,6 @@ class PhotosTableViewCell: UITableViewCell {
         
         stackView.axis = .horizontal
         stackView.distribution = .fillEqually
-        stackView.alignment = .fill
         stackView.spacing = 8.0
         
         addImagesInStack(uiStack: stackView, count: 4)
@@ -73,6 +79,7 @@ class PhotosTableViewCell: UITableViewCell {
     
     private func addSubviews() {
         addSubview(stackPhotos)
+        addSubview(arrowImage)
         addSubview(titleLabel)
     }
     
@@ -87,22 +94,15 @@ class PhotosTableViewCell: UITableViewCell {
         ])
         
         NSLayoutConstraint.activate([
+            arrowImage.centerYAnchor.constraint(equalTo: titleLabel.centerYAnchor),
+            arrowImage.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -12)
+        ])
+        
+        NSLayoutConstraint.activate([
             stackPhotos.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 12),
             stackPhotos.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 12),
             stackPhotos.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -12),
             stackPhotos.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -12)
         ])
-
     }
-    
-    // MARK: - Public
-    
-//    func update(_ post: Post) {
-//        authorLabel.text = post.author
-//        descriptionLabel.text = post.description
-//        postImage.image = UIImage(named: post.image)
-//        likesLabel.text = "Likes: \(post.likes)"
-//        viewsLabel.text = "Views: \(post.views)"
-//    }
-
 }

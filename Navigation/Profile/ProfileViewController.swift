@@ -18,7 +18,7 @@ class ProfileViewController: UIViewController {
             style: .grouped
         )
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.register(ProfileTableHeaderFooterView.self, forHeaderFooterViewReuseIdentifier: ProfileTableHeaderFooterView.id)
+        tableView.register(ProfileHeaderView.self, forHeaderFooterViewReuseIdentifier: ProfileHeaderView.id)
         tableView.register(PhotosTableViewCell.self, forCellReuseIdentifier: PhotosTableViewCell.id)
         tableView.register(PostTableViewCell.self, forCellReuseIdentifier: PostTableViewCell.id)
         
@@ -33,22 +33,11 @@ class ProfileViewController: UIViewController {
         setupConstraints()
         tuneTableView()
     }
-
-//    override func viewWillAppear(_ animated: Bool) {
-//        super.viewWillAppear(animated)
-//
-//        postsTableView.indexPathsForSelectedRows?.forEach{ indexPath in
-//            postsTableView.deselectRow(
-//                at: indexPath,
-//                animated: animated
-//            )
-//        }
-//    }
     
     private func addSubviews() {
         view.addSubview(postsTableView)
         navigationController?.navigationBar.backgroundColor = .white
-        view.backgroundColor = .lightGray
+        view.backgroundColor = .systemGray6// .lightGray
     }
     
     func setupConstraints() {
@@ -65,8 +54,6 @@ class ProfileViewController: UIViewController {
     private func tuneTableView() {
         postsTableView.dataSource = self
         postsTableView.delegate = self
-        
-//        postsTableView.estimatedRowHeight = 100.0
         postsTableView.rowHeight = UITableView.automaticDimension
 
         if #available(iOS 15.0, *) {
@@ -120,7 +107,7 @@ extension ProfileViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
         if section == 0 {
-            let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: ProfileTableHeaderFooterView.id) as! ProfileTableHeaderFooterView
+            let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: ProfileHeaderView.id) as! ProfileHeaderView
             return headerView
         } else {
             return nil
@@ -129,13 +116,13 @@ extension ProfileViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        switch indexPath.section {
-//        case 0:
-//            tableView.deselectRow(at: indexPath, animated: false)
-//            navigationController?.pushViewController(PhotosViewController(), animated: true)
-//        case 1:
-//        default:
-//        }
+        switch indexPath.section {
+        case 0:
+            tableView.deselectRow(at: indexPath, animated: false)
+            navigationController?.pushViewController(PhotosViewController(), animated: true)
+        default:
+            return
+        }
 
     }
 

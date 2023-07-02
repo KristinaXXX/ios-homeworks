@@ -13,12 +13,10 @@ struct Photos {
 
 extension Photos {
     static func make() -> [Photos] {
-        [
-            Photos(image: "firImage"),
-            Photos(image: "firImage"),
-            Photos(image: "firImage"),
-            Photos(image: "firImage"),
-            Photos(image: "firImage")
-        ]
+        var photoArray: [Photos] = []
+        for i in 1...20 {
+            photoArray.append(Photos(image: "house_\(i)"))
+        }
+        return photoArray
     }
 }
