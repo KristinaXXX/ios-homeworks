@@ -8,8 +8,9 @@
 import UIKit
 import Foundation
 
-class ProfileHeaderView: UIView {
+class ProfileHeaderView: UITableViewHeaderFooterView { //UIView {
 
+    static let id = "ProfileHeaderView"
     private var statusText: String = "Waiting for something..."
     
     // MARK: - Custom elements
@@ -84,8 +85,10 @@ class ProfileHeaderView: UIView {
     
     // MARK: - UI Loading
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    //override init(frame: CGRect) {
+    override init(reuseIdentifier: String?) {
+        //super.init(frame: frame)
+        super.init(reuseIdentifier: reuseIdentifier)
         addSubviews()
         setupConstraint()
     }
