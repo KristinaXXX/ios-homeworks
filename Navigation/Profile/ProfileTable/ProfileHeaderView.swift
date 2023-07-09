@@ -8,10 +8,11 @@
 import UIKit
 import Foundation
 
-class ProfileHeaderView: UITableViewHeaderFooterView { //UIView {
+class ProfileHeaderView: UITableViewHeaderFooterView {
 
     static let id = "ProfileHeaderView"
     private var statusText: String = "Waiting for something..."
+    private var profileImagePoint = CGPoint()
     
     // MARK: - Custom elements
     
@@ -23,6 +24,10 @@ class ProfileHeaderView: UITableViewHeaderFooterView { //UIView {
         image.layer.borderColor = UIColor.white.cgColor
         image.translatesAutoresizingMaskIntoConstraints = false
         image.contentMode = .scaleAspectFill
+        
+        let tapImage = UITapGestureRecognizer(target: self, action: #selector(didTapProfileImage))
+        addGestureRecognizer(tapImage)
+        
         return image
     }()
     
@@ -83,11 +88,31 @@ class ProfileHeaderView: UITableViewHeaderFooterView { //UIView {
         return textField
     }()
     
+    private lazy var closeProfileImageButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.alpha = 0
+        button.backgroundColor = .clear
+        button.contentMode = .scaleToFill
+        button.setImage(UIImage(systemName: "xmark"), for: .normal)
+        button.tintColor = .black
+        button.addTarget(self, action: #selector(closeProfileImage), for: .touchUpInside)
+        
+        return button
+    }()
+    
+    private lazy var profileBackgroundView: UIView = {
+        let view = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
+        view.backgroundColor = .systemGray6
+        view.isHidden = true
+        view.alpha = 0
+        return view
+    }()
+    
     // MARK: - UI Loading
     
     //override init(frame: CGRect) {
     override init(reuseIdentifier: String?) {
-        //super.init(frame: frame)
         super.init(reuseIdentifier: reuseIdentifier)
         addSubviews()
         setupConstraint()
@@ -99,10 +124,14 @@ class ProfileHeaderView: UITableViewHeaderFooterView { //UIView {
     
     private func addSubviews() {
         addSubview(fullNameLabel)
-        addSubview(profileImage)
+        
         addSubview(statusLabel)
         addSubview(showButton)
         addSubview(statusTextField)
+        
+        addSubview(profileBackgroundView)
+        addSubview(profileImage)
+        addSubview(closeProfileImageButton)
     }
     
     private func setupConstraint() {
@@ -141,6 +170,11 @@ class ProfileHeaderView: UITableViewHeaderFooterView { //UIView {
             statusTextField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16.0),
             statusTextField.bottomAnchor.constraint(equalTo: showButton.topAnchor, constant: -16.0)
         ])
+        
+        NSLayoutConstraint.activate([
+            closeProfileImageButton.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 16),
+            closeProfileImageButton.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16),
+        ])
     }
     
     // MARK: - Selectors
@@ -152,6 +186,46 @@ class ProfileHeaderView: UITableViewHeaderFooterView { //UIView {
     
     @objc func statusTextChanged(_ textField: UITextField) {
         statusText = textField.text ?? ""
+    }
+    
+    @objc private func didTapProfileImage() {
+        profileImage.isUserInteractionEnabled = false
+                
+        ProfileViewController.postsTableView.isScrollEnabled = false
+        ProfileViewController.postsTableView.tableHeaderView?.isUserInteractionEnabled = false
+        ProfileViewController.postsTableView.cellForRow(at: IndexPath(row: 0, section: 0))?.isUserInteractionEnabled = false
+        ProfileViewController.postsTableView.cellForRow(at: IndexPath(row: 0, section: 1))?.isUserInteractionEnabled = false
+        
+        profileImagePoint = profileImage.center
+        let scale = UIScreen.main.bounds.width / profileImage.bounds.width
+        
+        UIView.animate(withDuration: 0.5) {
+            self.profileImage.transform = CGAffineTransform(scaleX: scale, y: scale)
+            self.profileImage.center = CGPoint(x: UIScreen.main.bounds.midX, y: UIScreen.main.bounds.midY - self.profileImagePoint.y)
+            self.profileBackgroundView.isHidden = false
+            self.profileBackgroundView.alpha = 0.8
+            self.profileImage.layer.cornerRadius = 0
+        } completion: { _ in UIView.animate(withDuration: 0.3) {
+                self.closeProfileImageButton.alpha = 1
+            }
+        }
+    }
+    
+    @objc private func closeProfileImage() {
+        UIImageView.animate(withDuration: 0.5) {
+            UIImageView.animate(withDuration: 0.5) {
+                self.profileImage.transform = CGAffineTransform(scaleX: 1, y: 1)
+                self.profileImage.center = self.profileImagePoint
+                self.closeProfileImageButton.alpha = 0
+                self.profileBackgroundView.alpha = 0
+                self.profileImage.layer.cornerRadius = 55
+            }
+        } completion: { _ in
+            ProfileViewController.postsTableView.isScrollEnabled = true
+            ProfileViewController.postsTableView.cellForRow(at: IndexPath(row: 0, section: 0))?.isUserInteractionEnabled = true
+            ProfileViewController.postsTableView.cellForRow(at: IndexPath(row: 0, section: 1))?.isUserInteractionEnabled = true
+            self.profileImage.isUserInteractionEnabled = true
+        }
     }
 
 }
