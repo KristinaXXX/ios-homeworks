@@ -6,10 +6,10 @@
 //
 
 import UIKit
+import StorageService
 
 class ProfileViewController: UIViewController {
 
-    fileprivate let data = Post.make()
     // MARK: - Custom elements
     
     static var postsTableView: UITableView = {
@@ -37,7 +37,11 @@ class ProfileViewController: UIViewController {
     private func addSubviews() {
         view.addSubview(Self.postsTableView)
         navigationController?.navigationBar.backgroundColor = .white
+        #if DEBUG
         view.backgroundColor = .systemGray6
+        #else
+        view.backgroundColor = .systemBrown
+        #endif
     }
     
     func setupConstraints() {
@@ -70,7 +74,7 @@ extension ProfileViewController: UITableViewDataSource {
         case 0:
             return 1
         case 1:
-            return data.count
+            return postData.count
         default:
             return 0
         }
@@ -92,7 +96,7 @@ extension ProfileViewController: UITableViewDelegate {
             return cell
         case 1:
             let cell = tableView.dequeueReusableCell(withIdentifier: PostTableViewCell.id, for: indexPath) as! PostTableViewCell
-            cell.update(data[indexPath.row])
+            cell.update(postData[indexPath.row])
             return cell
         default:
             return UITableViewCell()
