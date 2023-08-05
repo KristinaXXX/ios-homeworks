@@ -12,7 +12,7 @@ class ProfileViewController: UIViewController {
     fileprivate let data = Post.make()
     // MARK: - Custom elements
     
-    private lazy var postsTableView: UITableView = {
+    static var postsTableView: UITableView = {
         let tableView = UITableView(
             frame: .zero,
             style: .grouped
@@ -35,29 +35,29 @@ class ProfileViewController: UIViewController {
     }
     
     private func addSubviews() {
-        view.addSubview(postsTableView)
+        view.addSubview(Self.postsTableView)
         navigationController?.navigationBar.backgroundColor = .white
-        view.backgroundColor = .systemGray6// .lightGray
+        view.backgroundColor = .systemGray6
     }
     
     func setupConstraints() {
 
         let safeAreaLayoutGuide = view.safeAreaLayoutGuide
         NSLayoutConstraint.activate([
-            postsTableView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
-            postsTableView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
-            postsTableView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
-            postsTableView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor)
+            Self.postsTableView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
+            Self.postsTableView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
+            Self.postsTableView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
+            Self.postsTableView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor)
         ])
     }
     
     private func tuneTableView() {
-        postsTableView.dataSource = self
-        postsTableView.delegate = self
-        postsTableView.rowHeight = UITableView.automaticDimension
+        Self.postsTableView.dataSource = self
+        Self.postsTableView.delegate = self
+        Self.postsTableView.rowHeight = UITableView.automaticDimension
 
         if #available(iOS 15.0, *) {
-            postsTableView.sectionHeaderTopPadding = 0.0
+            Self.postsTableView.sectionHeaderTopPadding = 0.0
         }
     }
 
