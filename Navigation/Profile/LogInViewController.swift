@@ -6,11 +6,10 @@
 //
 
 import UIKit
-//import "UserInfoData.h"
 
 class LogInViewController: UIViewController {
 
-    private var userInfo: UserInfo? = nil
+    private var userInfo = UserInfo()
     
     // MARK: - Custom elements
     
@@ -207,32 +206,31 @@ class LogInViewController: UIViewController {
     // MARK: - Selectors
     
     @objc func logInButtonPressed(_ sender: UIButton) {
-        if (userInfo?.login ?? "" == "") {
+        #if DEBUG
+        guard let user = TestUserService().takeUser(login: userInfo.login) else {
+            return
+        }
+        #else
+        // беру дефолтного пользователя (пока что) и сверяю с введенным логином
+        guard let user = CurrentUserService(user: User()).takeUser(login: userInfo.login) else {
             showFailLogin()
             return
         }
-        let profileViewController = ProfileViewController()
+        #endif
+        let profileViewController = ProfileViewController(user: user)
         navigationController?.pushViewController(profileViewController, animated: true)
     }
     
     @objc func loginTextChanged(_ textField: UITextField) {
-        if (userInfo == nil) {
-            userInfo = UserInfo(login: textField.text ?? "", password: "")
-        } else {
-            userInfo = UserInfo(login: textField.text ?? "", password: userInfo?.password ?? "")
-        }
+        userInfo.login = textField.text ?? ""
     }
     
     @objc func passwordTextChanged(_ textField: UITextField) {
-        if (userInfo == nil) {
-            userInfo = UserInfo(login: "", password: textField.text ?? "")
-        } else {
-            userInfo = UserInfo(login: userInfo?.login ?? "", password: textField.text ?? "")
-        }
+        userInfo.password = textField.text ?? ""
     }
     
     private func showFailLogin() {
-        let alert = UIAlertController(title: "Fail", message: "Login must be completed", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Fail", message: "Login isn't correct", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default))
         self.present(alert, animated: true, completion: nil)
     }

@@ -11,6 +11,16 @@ import StorageService
 class ProfileViewController: UIViewController {
 
     // MARK: - Custom elements
+    var user: User
+    
+    init(user: User) {
+        self.user = user
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     static var postsTableView: UITableView = {
         let tableView = UITableView(
@@ -38,9 +48,9 @@ class ProfileViewController: UIViewController {
         view.addSubview(Self.postsTableView)
         navigationController?.navigationBar.backgroundColor = .white
         #if DEBUG
-        view.backgroundColor = .systemGray6
-        #else
         view.backgroundColor = .systemBrown
+        #else
+        view.backgroundColor = .systemGray6
         #endif
     }
     
@@ -101,7 +111,6 @@ extension ProfileViewController: UITableViewDelegate {
         default:
             return UITableViewCell()
         }
-        
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -112,11 +121,11 @@ extension ProfileViewController: UITableViewDelegate {
         
         if section == 0 {
             let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: ProfileHeaderView.id) as! ProfileHeaderView
+            headerView.update(user: user)
             return headerView
         } else {
             return nil
         }
-        
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -127,7 +136,6 @@ extension ProfileViewController: UITableViewDelegate {
         default:
             return
         }
-
     }
 
 }
