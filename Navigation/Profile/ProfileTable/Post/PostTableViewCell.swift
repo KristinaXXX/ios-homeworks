@@ -7,6 +7,7 @@
 
 import UIKit
 import StorageService
+import iOSIntPackage
 
 class PostTableViewCell: UITableViewCell {
     
@@ -128,6 +129,9 @@ class PostTableViewCell: UITableViewCell {
         authorLabel.text = post.author
         descriptionLabel.text = post.description
         postImage.image = UIImage(named: post.image)
+        ImageProcessor().processImage(sourceImage: postImage.image ?? UIImage(), filter: .noir, completion: {outputImage in
+            postImage.image = outputImage
+        })
         likesLabel.text = "Likes: \(post.likes)"
         viewsLabel.text = "Views: \(post.views)"
     }
