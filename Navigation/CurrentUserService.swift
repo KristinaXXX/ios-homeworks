@@ -9,16 +9,9 @@ import Foundation
 
 class CurrentUserService: UserService {
     
-    let user: User
-    
-    init(user: User) {
-        self.user = user
-    }
+    let user: User = User()
     
     func takeUser(login: String) -> User? {
-        if login == user.login {
-            return user
-        }
-        return nil
+        login == user.login ? user : nil
     }
 }

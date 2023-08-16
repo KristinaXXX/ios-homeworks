@@ -207,18 +207,16 @@ class LogInViewController: UIViewController {
     
     @objc func logInButtonPressed(_ sender: UIButton) {
         #if DEBUG
-        guard let user = TestUserService().takeUser(login: userInfo.login) else {
-            return
-        }
+        let service = TestUserService()
         #else
-        // беру дефолтного пользователя (пока что) и сверяю с введенным логином
-        guard let user = CurrentUserService(user: User()).takeUser(login: userInfo.login) else {
-            showFailLogin()
-            return
-        }
+        let service = CurrentUserService()
         #endif
-        let profileViewController = ProfileViewController(user: user)
-        navigationController?.pushViewController(profileViewController, animated: true)
+        if let user = service.takeUser(login: userInfo.login) {
+            let profileVC = ProfileViewController(user: user)
+            navigationController?.setViewControllers([profileVC], animated: true)
+        } else {
+            showFailLogin()
+        }
     }
     
     @objc func loginTextChanged(_ textField: UITextField) {
