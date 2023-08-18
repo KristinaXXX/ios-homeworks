@@ -30,5 +30,5 @@ class User {
 }
 
 protocol UserService {
-    func takeUser(login: String) -> User?
+    func takeUser(login: String) -> User
 }

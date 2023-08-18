@@ -10,6 +10,7 @@ import UIKit
 class LogInViewController: UIViewController {
 
     private var userInfo = UserInfo()
+    var loginDelegate: LoginViewControllerDelegate?
     
     // MARK: - Custom elements
     
@@ -115,13 +116,11 @@ class LogInViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
         setupKeyboardObservers()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        
         removeKeyboardObservers()
     }
     
@@ -206,17 +205,15 @@ class LogInViewController: UIViewController {
     // MARK: - Selectors
     
     @objc func logInButtonPressed(_ sender: UIButton) {
-        #if DEBUG
-        let service = TestUserService()
-        #else
-        let service = CurrentUserService()
-        #endif
-        if let user = service.takeUser(login: userInfo.login) {
-            let profileVC = ProfileViewController(user: user)
-            navigationController?.setViewControllers([profileVC], animated: true)
-        } else {
+        
+        guard loginDelegate?.check(self, login: userInfo.login, password: userInfo.password) == true else {
             showFailLogin()
+            return
         }
+
+        let user = TestUserService().takeUser(login: userInfo.login)
+        let profileVC = ProfileViewController(user: user)
+        navigationController?.setViewControllers([profileVC], animated: true)
     }
     
     @objc func loginTextChanged(_ textField: UITextField) {
