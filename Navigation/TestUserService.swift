@@ -9,9 +9,9 @@ import Foundation
 
 class TestUserService: UserService {
     
-    let user = User()
+    private let user = User()
     
-    func takeUser(login: String) -> User? {
+    func takeUser(login: String) -> User {
         user
     }
 }

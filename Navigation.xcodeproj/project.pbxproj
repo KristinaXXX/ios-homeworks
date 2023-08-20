@@ -31,6 +31,7 @@
 		6171BE092A3B29BF00905F63 /* PostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6171BE082A3B29BF00905F63 /* PostTableViewCell.swift */; };
 		617CCBF92A39851E002AA4EB /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 617CCBF82A39851E002AA4EB /* LogInViewController.swift */; };
 		617CCBFB2A3A093B002AA4EB /* UserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 617CCBFA2A3A093B002AA4EB /* UserInfo.swift */; };
+		61EAE6FE2A8D136A004DBCF8 /* Checker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61EAE6FD2A8D136A004DBCF8 /* Checker.swift */; };
 		61F130422A30A96200E27506 /* ProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61F130412A30A96200E27506 /* ProfileHeaderView.swift */; };
 /* End PBXBuildFile section */
 
@@ -84,6 +85,7 @@
 		6171BE082A3B29BF00905F63 /* PostTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTableViewCell.swift; sourceTree = "<group>"; };
 		617CCBF82A39851E002AA4EB /* LogInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
 		617CCBFA2A3A093B002AA4EB /* UserInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfo.swift; sourceTree = "<group>"; };
+		61EAE6FD2A8D136A004DBCF8 /* Checker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Checker.swift; sourceTree = "<group>"; };
 		61F130412A30A96200E27506 /* ProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -178,6 +180,7 @@
 				615B8EDA2A7F8AD400EC58C4 /* User.swift */,
 				615B8EDC2A7F8CF100EC58C4 /* CurrentUserService.swift */,
 				615B8EDE2A7F9EF000EC58C4 /* TestUserService.swift */,
+				61EAE6FD2A8D136A004DBCF8 /* Checker.swift */,
 			);
 			path = Navigation;
 			sourceTree = "<group>";
@@ -315,6 +318,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				610058912A501E0B00E8732C /* PhotosTableViewCell.swift in Sources */,
+				61EAE6FE2A8D136A004DBCF8 /* Checker.swift in Sources */,
 				610058952A51677A00E8732C /* PhotosViewController.swift in Sources */,
 				610BE1CF2A2790B8005E7CD1 /* PostViewController.swift in Sources */,
 				610BE1BB2A265BCB005E7CD1 /* ViewController.swift in Sources */,
