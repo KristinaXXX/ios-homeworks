@@ -63,7 +63,7 @@ class LogInViewController: UIViewController {
         textField.autocapitalizationType = .none
         textField.leftView = UIView(frame: CGRect(x: view.frame.minX, y: view.frame.minY, width: 12.0, height: view.frame.height))
         textField.leftViewMode = .always
-        textField.placeholder = "Email or phone"
+        textField.placeholder = "Email or phone (111)"
         textField.returnKeyType = UIReturnKeyType.done
         textField.clearButtonMode = UITextField.ViewMode.whileEditing
         textField.contentVerticalAlignment = UIControl.ContentVerticalAlignment.center
@@ -87,7 +87,7 @@ class LogInViewController: UIViewController {
         textField.autocapitalizationType = .none
         textField.leftView = UIView(frame: CGRect(x: view.frame.minX, y: view.frame.minY, width: 12.0, height: view.frame.height))
         textField.leftViewMode = .always
-        textField.placeholder = "Password"
+        textField.placeholder = "Password (111)"
         textField.isSecureTextEntry = true
         textField.returnKeyType = UIReturnKeyType.done
         textField.clearButtonMode = UITextField.ViewMode.whileEditing
