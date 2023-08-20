@@ -211,9 +211,9 @@ class LogInViewController: UIViewController {
             return
         }
 
-        let user = TestUserService().takeUser(login: userInfo.login)
-        let profileVC = ProfileViewController(user: user)
-        navigationController?.setViewControllers([profileVC], animated: true)
+        let user = TestUserService().takeUser(login: userInfo.login)        
+        let profileViewController = ProfileViewController(user: user)
+        navigationController?.pushViewController(profileViewController, animated: true)
     }
     
     @objc func loginTextChanged(_ textField: UITextField) {
