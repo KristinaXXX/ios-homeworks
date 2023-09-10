@@ -14,7 +14,7 @@ class PhotosCollectionViewCell: UICollectionViewCell {
     private lazy var photoImageView: UIImageView = {
         let imageView = UIImageView(frame: .zero)
         imageView.translatesAutoresizingMaskIntoConstraints = false
-
+        imageView.clipsToBounds = true
         return imageView
     }()
     
@@ -46,8 +46,8 @@ class PhotosCollectionViewCell: UICollectionViewCell {
         ])
     }
     
-    func update(_ photo: Photos) {
-        photoImageView.image = UIImage(named: photo.image)
+    func update(_ photo: UIImage) {
+        photoImageView.image = photo
     }
     
 }
