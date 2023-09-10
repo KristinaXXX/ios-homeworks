@@ -10,13 +10,26 @@ import StorageService
 
 class FeedViewController: UIViewController {
 
-    // MARK: - Custom elements
+    // MARK: - Custom elements    
+    private lazy var showPost1 = CustomButton(title: "Post #1", buttonAction: ( { (b: UIButton) -> Void in self.showPost(b) } ))
+    private lazy var showPost2 = CustomButton(title: "Post #2", buttonAction: ( { (b: UIButton) -> Void in self.showPost(b) } ))
+    private lazy var checkGuessButton = CustomButton(title: "Check word", buttonAction: ( { (b: UIButton) -> Void in self.checkWord(b)} ))
     
-    private lazy var showPost1: UIButton = {
-        return createButton(title: "Post #1", color: .systemBlue, selector: #selector(showPost(_:)))
-    }()
-    private lazy var showPost2: UIButton = {
-        return createButton(title: "Post #2", color: .systemBlue, selector: #selector(showPost(_:)))
+    private lazy var checkWordTextField: UITextField = {
+        let textField = UITextField()
+        textField.font = UIFont.systemFont(ofSize: 16, weight: .regular)
+        textField.textColor = .black
+        textField.backgroundColor = .systemGray6
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.leftView = UIView(frame: CGRect(x: view.frame.minX, y: view.frame.minY, width: 12.0, height: view.frame.height))
+        textField.leftViewMode = .always
+        textField.placeholder = "Secret word"
+        textField.clearButtonMode = UITextField.ViewMode.whileEditing
+        textField.layer.cornerRadius = 10
+        textField.layer.borderWidth = 0.5
+        textField.layer.borderColor = UIColor.lightGray.cgColor
+        
+        return textField
     }()
     
     private lazy var stackFeeds: UIStackView = {
@@ -31,6 +44,8 @@ class FeedViewController: UIViewController {
         
         stackView.addArrangedSubview(showPost1)
         stackView.addArrangedSubview(showPost2)
+        stackView.addArrangedSubview(checkWordTextField)
+        stackView.addArrangedSubview(checkGuessButton)
         return stackView
     }()
 
@@ -52,16 +67,25 @@ class FeedViewController: UIViewController {
         NSLayoutConstraint.activate([
             stackFeeds.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16.0),
             stackFeeds.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 16.0),
-            stackFeeds.centerYAnchor.constraint(equalTo: safeAreaLayoutGuide.centerYAnchor)
+            stackFeeds.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 50)
         ])
     }
     
     // MARK: - Selectors
     
-    @objc func showPost(_ sender: UIButton) {
+    func showPost(_ sender: UIButton) {
         let postViewController = PostViewController()
         postViewController.post = Post(author: sender.titleLabel?.text ?? "")
         navigationController?.pushViewController(postViewController, animated: true)
+    }
+    
+    func checkWord(_ sender: UIButton) {
+        checkWordTextField.endEditing(true)
+        let result = FeedModel.shared.check(word: checkWordTextField.text ?? "")
+        let alert = UIAlertController(title: "Check word", message: result ? "Right!" : "False! Try to enter 'word'", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .default))
+
+        self.present(alert, animated: true, completion: nil)
     }
 }
 

@@ -49,21 +49,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
         return label
     }()
     
-    private lazy var showButton: UIButton = {
-        let button = UIButton()
-        button.layer.cornerRadius = 4
-        button.backgroundColor = .systemBlue
-        button.setTitle("Set status", for: .normal)
-        button.setTitleColor(.white, for: .normal)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        
-        button.layer.shadowOffset = CGSize(width: 4, height: 4)
-        button.layer.shadowOpacity = 0.7
-        button.layer.shadowRadius = 4.0
-        button.layer.shadowColor = UIColor.black.cgColor
-        button.addTarget(self, action: #selector(buttonPressed(_:)), for: .touchUpInside)
-        return button
-    }()
+    private lazy var showButton = CustomButton(title: "Set status", buttonAction: ( { (b: UIButton) -> Void in self.buttonPressed(b) } ))
     
     private lazy var statusTextField: UITextField = {
         let textField = UITextField()

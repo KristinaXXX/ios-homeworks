@@ -11,9 +11,7 @@ class InfoViewController: UIViewController {
 
     // MARK: - Custom elements
     
-    private lazy var showAlertButton: UIButton = {
-        return createButton(title: "Show alert", color: .systemBlue, selector: #selector(buttonPressed(_:)))
-    }()
+    private lazy var showAlertButton = CustomButton(title: "Show alert", buttonAction: ( { (b: UIButton) -> Void in self.buttonPressed(b) } ))
     
     
     // MARK: - UI Drawing
