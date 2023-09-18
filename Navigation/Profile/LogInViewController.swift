@@ -100,11 +100,13 @@ class LogInViewController: UIViewController {
         return textField
     }()
     
-    private lazy var logInButton: UIButton = {
-        let button = createButton(title: "Log In", color: UIColor(named: "mainColor") ?? .lightGray, selector: #selector(logInButtonPressed(_:)))
-        button.layer.cornerRadius = 10
-        return button
-    }()
+//    private lazy var logInButton: UIButton = {
+//        let button = createButton(title: "Log In", color: UIColor(named: "mainColor") ?? .lightGray, selector: #selector(logInButtonPressed(_:)))
+//        button.layer.cornerRadius = 10
+//        return button
+//    }()
+    
+    private lazy var logInButton = CustomButton(title: "Log In", buttonAction: ( { self.logInButtonPressed() } ))
     
     
     override func viewDidLoad() {
@@ -204,7 +206,7 @@ class LogInViewController: UIViewController {
     
     // MARK: - Selectors
     
-    @objc func logInButtonPressed(_ sender: UIButton) {
+    func logInButtonPressed() {
         
         guard loginDelegate?.check(self, login: userInfo.login, password: userInfo.password) == true else {
             showFailLogin()
