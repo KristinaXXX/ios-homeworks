@@ -11,7 +11,7 @@ class InfoViewController: UIViewController {
 
     // MARK: - Custom elements
     
-    private lazy var showAlertButton = CustomButton(title: "Show alert", buttonAction: ( { (b: UIButton) -> Void in self.buttonPressed(b) } ))
+    private lazy var showAlertButton = CustomButton(title: "Show alert", buttonAction: ( { self.buttonPressed() } ))
     
     
     // MARK: - UI Drawing
@@ -42,7 +42,7 @@ class InfoViewController: UIViewController {
     
     // MARK: - Selectors
     
-    @objc func buttonPressed(_ sender: UIButton) {
+    @objc func buttonPressed() {
     
         let alert = UIAlertController(title: "Information", message: "More information", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default, handler: { _ in print("alert - OK has pressed")

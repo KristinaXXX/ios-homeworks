@@ -8,11 +8,13 @@
 import Foundation
 import UIKit
 
-class CustomButton: UIButton {
+final class CustomButton: UIButton {
 
-    private let buttonAction: ((_ sender: UIButton) -> Void)?
+    typealias Action = () -> Void
+        
+    private let buttonAction: Action
     
-    init(title: String, buttonAction: @escaping ((_ sender: UIButton) -> Void)) {
+    init(title: String, buttonAction: @escaping Action) {
         
         self.buttonAction = buttonAction
         super.init(frame: .zero)
@@ -31,7 +33,7 @@ class CustomButton: UIButton {
     
     @objc private func buttonTapped(_ sender: UIButton) {
         // call closure
-        buttonAction?(sender)
+        buttonAction()
     }
 
 }

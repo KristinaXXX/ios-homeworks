@@ -49,7 +49,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
         return label
     }()
     
-    private lazy var showButton = CustomButton(title: "Set status", buttonAction: ( { (b: UIButton) -> Void in self.buttonPressed(b) } ))
+    private lazy var showButton = CustomButton(title: "Set status", buttonAction: ( { self.buttonPressed() } ))
     
     private lazy var statusTextField: UITextField = {
         let textField = UITextField()
@@ -168,7 +168,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
     
     // MARK: - Selectors
     
-    @objc func buttonPressed(_ sender: UIButton) {
+    @objc func buttonPressed() {
         statusLabel.text = statusText
         statusTextField.endEditing(true)
     }

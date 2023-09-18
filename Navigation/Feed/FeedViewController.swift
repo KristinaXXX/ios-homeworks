@@ -11,9 +11,11 @@ import StorageService
 class FeedViewController: UIViewController {
 
     // MARK: - Custom elements    
-    private lazy var showPost1 = CustomButton(title: "Post #1", buttonAction: ( { (b: UIButton) -> Void in self.showPost(b) } ))
-    private lazy var showPost2 = CustomButton(title: "Post #2", buttonAction: ( { (b: UIButton) -> Void in self.showPost(b) } ))
-    private lazy var checkGuessButton = CustomButton(title: "Check word", buttonAction: ( { (b: UIButton) -> Void in self.checkWord(b)} ))
+    private lazy var showPost1 = CustomButton(title: "Post #1", buttonAction: ( { self.showPost("Post #1") } ))
+    private lazy var showPost2 = CustomButton(title: "Post #2", buttonAction: ( { self.showPost("Post #2") } ))
+    private lazy var checkGuessButton = CustomButton(title: "Check word", buttonAction: ( { self.checkWord()} ))
+    
+    private let feedModel = FeedModel()
     
     private lazy var checkWordTextField: UITextField = {
         let textField = UITextField()
@@ -73,15 +75,15 @@ class FeedViewController: UIViewController {
     
     // MARK: - Selectors
     
-    func showPost(_ sender: UIButton) {
+    func showPost(_ text: String) {
         let postViewController = PostViewController()
-        postViewController.post = Post(author: sender.titleLabel?.text ?? "")
+        postViewController.post = Post(author: text)
         navigationController?.pushViewController(postViewController, animated: true)
     }
     
-    func checkWord(_ sender: UIButton) {
+    func checkWord() {
         checkWordTextField.endEditing(true)
-        let result = FeedModel.shared.check(word: checkWordTextField.text ?? "")
+        let result = feedModel.check(word: checkWordTextField.text ?? "")
         let alert = UIAlertController(title: "Check word", message: result ? "Right!" : "False! Try to enter 'word'", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .default))
 

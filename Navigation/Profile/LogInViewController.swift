@@ -106,7 +106,7 @@ class LogInViewController: UIViewController {
 //        return button
 //    }()
     
-    private lazy var logInButton = CustomButton(title: "Log In", buttonAction: ( { (b: UIButton) -> Void in self.logInButtonPressed(b) } ))
+    private lazy var logInButton = CustomButton(title: "Log In", buttonAction: ( { self.logInButtonPressed() } ))
     
     
     override func viewDidLoad() {
@@ -206,7 +206,7 @@ class LogInViewController: UIViewController {
     
     // MARK: - Selectors
     
-    func logInButtonPressed(_ sender: UIButton) {
+    func logInButtonPressed() {
         
         guard loginDelegate?.check(self, login: userInfo.login, password: userInfo.password) == true else {
             showFailLogin()
