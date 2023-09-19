@@ -10,12 +10,12 @@ import StorageService
 
 class FeedViewController: UIViewController {
 
-    // MARK: - Custom elements    
+    // MARK: - Custom elements
     private lazy var showPost1 = CustomButton(title: "Post #1", buttonAction: ( { self.showPost("Post #1") } ))
     private lazy var showPost2 = CustomButton(title: "Post #2", buttonAction: ( { self.showPost("Post #2") } ))
     private lazy var checkGuessButton = CustomButton(title: "Check word", buttonAction: ( { self.checkWord()} ))
     
-    private let feedModel = FeedModel()
+    private let feedViewModel: FeedViewModel
     
     private lazy var checkWordTextField: UITextField = {
         let textField = UITextField()
@@ -51,6 +51,15 @@ class FeedViewController: UIViewController {
         return stackView
     }()
 
+    init(feedViewModel: FeedViewModel) {
+        self.feedViewModel = feedViewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     // MARK: - UI Drawing
     
     override func viewDidLoad() {
@@ -76,18 +85,12 @@ class FeedViewController: UIViewController {
     // MARK: - Selectors
     
     func showPost(_ text: String) {
-        let postViewController = PostViewController()
-        postViewController.post = Post(author: text)
-        navigationController?.pushViewController(postViewController, animated: true)
+        feedViewModel.showPost(text: text)
     }
     
     func checkWord() {
         checkWordTextField.endEditing(true)
-        let result = feedModel.check(word: checkWordTextField.text ?? "")
-        let alert = UIAlertController(title: "Check word", message: result ? "Right!" : "False! Try to enter 'word'", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .default))
-
-        self.present(alert, animated: true, completion: nil)
+        feedViewModel.checkWordShowResult(checkWordTextField.text ?? "")
     }
 }
 

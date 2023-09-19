@@ -31,11 +31,11 @@ extension Checker: NSCopying {
 }
 
 protocol LoginViewControllerDelegate {
-    func check(_ sender: LogInViewController, login: String, password: String) -> Bool
+    func check(login: String, password: String) -> Bool
 }
 
 struct LoginInspector: LoginViewControllerDelegate {
-    func check(_ sender: LogInViewController, login: String, password: String) -> Bool {
+    func check(login: String, password: String) -> Bool {
         return Checker.shared.check(login: login, password: password)
     }
 }

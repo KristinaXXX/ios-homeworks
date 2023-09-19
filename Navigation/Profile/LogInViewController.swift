@@ -10,7 +10,7 @@ import UIKit
 class LogInViewController: UIViewController {
 
     private var userInfo = UserInfo()
-    var loginDelegate: LoginViewControllerDelegate?
+    private let profileViewModel: ProfileViewModel
     
     // MARK: - Custom elements
     
@@ -100,14 +100,16 @@ class LogInViewController: UIViewController {
         return textField
     }()
     
-//    private lazy var logInButton: UIButton = {
-//        let button = createButton(title: "Log In", color: UIColor(named: "mainColor") ?? .lightGray, selector: #selector(logInButtonPressed(_:)))
-//        button.layer.cornerRadius = 10
-//        return button
-//    }()
-    
     private lazy var logInButton = CustomButton(title: "Log In", buttonAction: ( { self.logInButtonPressed() } ))
     
+    init(profileViewModel: ProfileViewModel) {
+        self.profileViewModel = profileViewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -207,15 +209,7 @@ class LogInViewController: UIViewController {
     // MARK: - Selectors
     
     func logInButtonPressed() {
-        
-        guard loginDelegate?.check(self, login: userInfo.login, password: userInfo.password) == true else {
-            showFailLogin()
-            return
-        }
-
-        let user = TestUserService().takeUser(login: userInfo.login)        
-        let profileViewController = ProfileViewController(user: user)
-        navigationController?.pushViewController(profileViewController, animated: true)
+        profileViewModel.checkLoginToProfile(userInfo: userInfo)
     }
     
     @objc func loginTextChanged(_ textField: UITextField) {
@@ -224,12 +218,6 @@ class LogInViewController: UIViewController {
     
     @objc func passwordTextChanged(_ textField: UITextField) {
         userInfo.password = textField.text ?? ""
-    }
-    
-    private func showFailLogin() {
-        let alert = UIAlertController(title: "Fail", message: "Login isn't correct", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default))
-        self.present(alert, animated: true, completion: nil)
     }
     
     // MARK: - Keyboard
