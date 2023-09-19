@@ -29,7 +29,7 @@
 		610D2F3F2AB9A8160002DECC /* ProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 610D2F3E2AB9A8160002DECC /* ProfileModel.swift */; };
 		610D2F412AB9B28D0002DECC /* FeedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 610D2F402AB9B28D0002DECC /* FeedViewModel.swift */; };
 		610D2F432AB9BBCB0002DECC /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 610D2F422AB9BBCB0002DECC /* ProfileViewModel.swift */; };
-		610D2F452AB9C4650002DECC /* ExtensionUIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 610D2F442AB9C4650002DECC /* ExtensionUIViewController.swift */; };
+		610D2F472AB9C6E80002DECC /* ExtensionUIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 610D2F462AB9C6E80002DECC /* ExtensionUIViewController.swift */; };
 		615B8ECD2A7E232600EC58C4 /* StorageService.h in Headers */ = {isa = PBXBuildFile; fileRef = 615B8ECC2A7E232600EC58C4 /* StorageService.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		615B8ED02A7E232600EC58C4 /* StorageService.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 615B8ECA2A7E232600EC58C4 /* StorageService.framework */; };
 		615B8ED12A7E232600EC58C4 /* StorageService.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 615B8ECA2A7E232600EC58C4 /* StorageService.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -95,7 +95,7 @@
 		610D2F3E2AB9A8160002DECC /* ProfileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileModel.swift; sourceTree = "<group>"; };
 		610D2F402AB9B28D0002DECC /* FeedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewModel.swift; sourceTree = "<group>"; };
 		610D2F422AB9BBCB0002DECC /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
-		610D2F442AB9C4650002DECC /* ExtensionUIViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ExtensionUIViewController.swift; path = ../../../../../.Trash/ExtensionUIViewController.swift; sourceTree = "<group>"; };
+		610D2F462AB9C6E80002DECC /* ExtensionUIViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtensionUIViewController.swift; sourceTree = "<group>"; };
 		615B8ECA2A7E232600EC58C4 /* StorageService.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = StorageService.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		615B8ECC2A7E232600EC58C4 /* StorageService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StorageService.h; sourceTree = "<group>"; };
 		615B8EDA2A7F8AD400EC58C4 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -195,8 +195,8 @@
 				6100588C2A500DCD00E8732C /* Feed */,
 				61F130402A30A91400E27506 /* Profile */,
 				610BE1B62A265BCB005E7CD1 /* AppDelegate.swift */,
+				610D2F462AB9C6E80002DECC /* ExtensionUIViewController.swift */,
 				610BE1B82A265BCB005E7CD1 /* SceneDelegate.swift */,
-				610D2F442AB9C4650002DECC /* ExtensionUIViewController.swift */,
 				610D2F2E2AAD91BD0002DECC /* CustomButton.swift */,
 				610BE1BF2A265BCD005E7CD1 /* Assets.xcassets */,
 				610BE1C12A265BCD005E7CD1 /* LaunchScreen.storyboard */,
@@ -374,6 +374,7 @@
 				610058952A51677A00E8732C /* PhotosViewController.swift in Sources */,
 				610BE1CF2A2790B8005E7CD1 /* PostViewController.swift in Sources */,
 				610058932A50231500E8732C /* Photos.swift in Sources */,
+				610D2F472AB9C6E80002DECC /* ExtensionUIViewController.swift in Sources */,
 				6171BE092A3B29BF00905F63 /* PostTableViewCell.swift in Sources */,
 				617CCBF92A39851E002AA4EB /* LogInViewController.swift in Sources */,
 				610D2F342AB9A13E0002DECC /* MainCoordinator.swift in Sources */,
@@ -382,7 +383,6 @@
 				610D2F2F2AAD91BD0002DECC /* CustomButton.swift in Sources */,
 				615B8EDD2A7F8CF100EC58C4 /* CurrentUserService.swift in Sources */,
 				610D2F3F2AB9A8160002DECC /* ProfileModel.swift in Sources */,
-				610D2F452AB9C4650002DECC /* ExtensionUIViewController.swift in Sources */,
 				610D2F412AB9B28D0002DECC /* FeedViewModel.swift in Sources */,
 				615B8EDF2A7F9EF000EC58C4 /* TestUserService.swift in Sources */,
 				610D2F3D2AB9A6CA0002DECC /* ProfileCoordinator.swift in Sources */,
