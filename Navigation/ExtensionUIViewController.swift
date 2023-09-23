@@ -22,17 +22,4 @@ extension UIViewController {
         return UIBarButtonItem(customView: button)
         
     }
-    
-    func createButton(title: String, color: UIColor, selector: Selector) -> UIButton {
-        
-        let button = UIButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle(title, for: .normal)
-        button.backgroundColor = color
-        button.setTitleColor(.white, for: .normal)
-        button.addTarget(self, action: selector, for: .touchUpInside)
-       
-        return button
-        
-    }
 }

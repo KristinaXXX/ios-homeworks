@@ -10,4 +10,9 @@ import Foundation
 struct UserInfo {
     var login: String
     var password: String
+   
+    init() {
+        self.login = ""
+        self.password = ""
+    }
 }

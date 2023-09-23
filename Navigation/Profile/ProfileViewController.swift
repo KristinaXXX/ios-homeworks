@@ -6,11 +6,21 @@
 //
 
 import UIKit
+import StorageService
 
 class ProfileViewController: UIViewController {
 
-    fileprivate let data = Post.make()
     // MARK: - Custom elements
+    var user: User
+    
+    init(user: User) {
+        self.user = user
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     static var postsTableView: UITableView = {
         let tableView = UITableView(
@@ -37,7 +47,11 @@ class ProfileViewController: UIViewController {
     private func addSubviews() {
         view.addSubview(Self.postsTableView)
         navigationController?.navigationBar.backgroundColor = .white
+        #if DEBUG
+        view.backgroundColor = .systemBrown
+        #else
         view.backgroundColor = .systemGray6
+        #endif
     }
     
     func setupConstraints() {
@@ -70,7 +84,7 @@ extension ProfileViewController: UITableViewDataSource {
         case 0:
             return 1
         case 1:
-            return data.count
+            return postData.count
         default:
             return 0
         }
@@ -92,12 +106,11 @@ extension ProfileViewController: UITableViewDelegate {
             return cell
         case 1:
             let cell = tableView.dequeueReusableCell(withIdentifier: PostTableViewCell.id, for: indexPath) as! PostTableViewCell
-            cell.update(data[indexPath.row])
+            cell.update(postData[indexPath.row])
             return cell
         default:
             return UITableViewCell()
         }
-        
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -108,11 +121,11 @@ extension ProfileViewController: UITableViewDelegate {
         
         if section == 0 {
             let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: ProfileHeaderView.id) as! ProfileHeaderView
+            headerView.update(user: user)
             return headerView
         } else {
             return nil
         }
-        
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -123,7 +136,6 @@ extension ProfileViewController: UITableViewDelegate {
         default:
             return
         }
-
     }
 
 }

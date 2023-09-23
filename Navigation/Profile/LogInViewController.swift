@@ -6,11 +6,11 @@
 //
 
 import UIKit
-//import "UserInfoData.h"
 
 class LogInViewController: UIViewController {
 
-    private var userInfo: UserInfo? = nil
+    private var userInfo = UserInfo()
+    private let profileViewModel: ProfileViewModel
     
     // MARK: - Custom elements
     
@@ -63,7 +63,7 @@ class LogInViewController: UIViewController {
         textField.autocapitalizationType = .none
         textField.leftView = UIView(frame: CGRect(x: view.frame.minX, y: view.frame.minY, width: 12.0, height: view.frame.height))
         textField.leftViewMode = .always
-        textField.placeholder = "Email or phone"
+        textField.placeholder = "Email or phone (111)"
         textField.returnKeyType = UIReturnKeyType.done
         textField.clearButtonMode = UITextField.ViewMode.whileEditing
         textField.contentVerticalAlignment = UIControl.ContentVerticalAlignment.center
@@ -87,7 +87,7 @@ class LogInViewController: UIViewController {
         textField.autocapitalizationType = .none
         textField.leftView = UIView(frame: CGRect(x: view.frame.minX, y: view.frame.minY, width: 12.0, height: view.frame.height))
         textField.leftViewMode = .always
-        textField.placeholder = "Password"
+        textField.placeholder = "Password (111)"
         textField.isSecureTextEntry = true
         textField.returnKeyType = UIReturnKeyType.done
         textField.clearButtonMode = UITextField.ViewMode.whileEditing
@@ -100,12 +100,16 @@ class LogInViewController: UIViewController {
         return textField
     }()
     
-    private lazy var logInButton: UIButton = {
-        let button = createButton(title: "Log In", color: UIColor(named: "mainColor") ?? .lightGray, selector: #selector(logInButtonPressed(_:)))
-        button.layer.cornerRadius = 10
-        return button
-    }()
+    private lazy var logInButton = CustomButton(title: "Log In", buttonAction: ( { self.logInButtonPressed() } ))
     
+    init(profileViewModel: ProfileViewModel) {
+        self.profileViewModel = profileViewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -116,13 +120,11 @@ class LogInViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
         setupKeyboardObservers()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        
         removeKeyboardObservers()
     }
     
@@ -206,35 +208,16 @@ class LogInViewController: UIViewController {
     
     // MARK: - Selectors
     
-    @objc func logInButtonPressed(_ sender: UIButton) {
-        if (userInfo?.login ?? "" == "") {
-            showFailLogin()
-            return
-        }
-        let profileViewController = ProfileViewController()
-        navigationController?.pushViewController(profileViewController, animated: true)
+    func logInButtonPressed() {
+        profileViewModel.checkLoginToProfile(userInfo: userInfo)
     }
     
     @objc func loginTextChanged(_ textField: UITextField) {
-        if (userInfo == nil) {
-            userInfo = UserInfo(login: textField.text ?? "", password: "")
-        } else {
-            userInfo = UserInfo(login: textField.text ?? "", password: userInfo?.password ?? "")
-        }
+        userInfo.login = textField.text ?? ""
     }
     
     @objc func passwordTextChanged(_ textField: UITextField) {
-        if (userInfo == nil) {
-            userInfo = UserInfo(login: "", password: textField.text ?? "")
-        } else {
-            userInfo = UserInfo(login: userInfo?.login ?? "", password: textField.text ?? "")
-        }
-    }
-    
-    private func showFailLogin() {
-        let alert = UIAlertController(title: "Fail", message: "Login must be completed", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default))
-        self.present(alert, animated: true, completion: nil)
+        userInfo.password = textField.text ?? ""
     }
     
     // MARK: - Keyboard

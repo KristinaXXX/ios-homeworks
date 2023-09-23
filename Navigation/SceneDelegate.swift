@@ -16,31 +16,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let scene = (scene as? UIWindowScene) else { return }
         
         let window = UIWindow(windowScene: scene)
-                
-        let feedViewController = FeedViewController()
-        feedViewController.title = "Feed"
-        feedViewController.view.backgroundColor = .white
         
-        let logInViewController = LogInViewController()
-        logInViewController.title = "Profile"
+        let mainCoordinator = MainCoordinator()
         
-        let tabBarController = UITabBarController()
-        tabBarController.tabBar.backgroundColor = .systemGray6
-        
-        feedViewController.tabBarItem = UITabBarItem(title: "Feed", image: UIImage(systemName: "rectangle.stack.fill"), tag: 0)
-        logInViewController.tabBarItem = UITabBarItem(title: "Profile", image: UIImage(systemName: "person.fill"), tag: 1)
-        
-        let controllers = [feedViewController, logInViewController]
-        tabBarController.viewControllers = controllers.map {
-            UINavigationController(rootViewController: $0)
-        }
-        tabBarController.selectedIndex = 0
-        
-        window.rootViewController = tabBarController
+        window.rootViewController = mainCoordinator.startApplication()
         window.makeKeyAndVisible()
         
         self.window = window
     }
-
 }
 

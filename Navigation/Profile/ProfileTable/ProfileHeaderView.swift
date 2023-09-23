@@ -17,7 +17,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
     // MARK: - Custom elements
     
     private lazy var profileImage: UIImageView = {
-        let image = UIImageView(image: UIImage(named: "avatarImage"))
+        let image = UIImageView()
         image.layer.cornerRadius = 55.0
         image.clipsToBounds = true
         image.layer.borderWidth = 3
@@ -35,7 +35,6 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 18, weight: .bold)
         label.textColor = .black
-        label.text = "Hipster Cat"
         label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -45,27 +44,12 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 14, weight: .regular)
         label.textColor = .gray
-        label.text = "Waiting for something..."
         label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
-    private lazy var showButton: UIButton = {
-        let button = UIButton()
-        button.layer.cornerRadius = 4
-        button.backgroundColor = .systemBlue
-        button.setTitle("Set status", for: .normal)
-        button.setTitleColor(.white, for: .normal)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        
-        button.layer.shadowOffset = CGSize(width: 4, height: 4)
-        button.layer.shadowOpacity = 0.7
-        button.layer.shadowRadius = 4.0
-        button.layer.shadowColor = UIColor.black.cgColor
-        button.addTarget(self, action: #selector(buttonPressed(_:)), for: .touchUpInside)
-        return button
-    }()
+    private lazy var showButton = CustomButton(title: "Set status", buttonAction: ( { self.buttonPressed() } ))
     
     private lazy var statusTextField: UITextField = {
         let textField = UITextField()
@@ -111,7 +95,6 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
     
     // MARK: - UI Loading
     
-    //override init(frame: CGRect) {
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
         addSubviews()
@@ -120,6 +103,12 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    public func update(user: User) {
+        fullNameLabel.text = user.fullName
+        statusLabel.text = user.status
+        profileImage.image = user.avatar
     }
     
     private func addSubviews() {
@@ -179,7 +168,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
     
     // MARK: - Selectors
     
-    @objc func buttonPressed(_ sender: UIButton) {
+    @objc func buttonPressed() {
         statusLabel.text = statusText
         statusTextField.endEditing(true)
     }
