@@ -60,13 +60,7 @@ class PhotosViewController: UIViewController {
                                              filter: ColorFilter.noir,
                                              qos: QualityOfService.utility,
                                              completion: { (imagesCGArray: [CGImage?]) in
-            self.photos = []
-            for elementCG in imagesCGArray {
-                if elementCG != nil {
-                    self.photos.append(UIImage(cgImage: elementCG!))
-                }
-            }
-            
+            self.photos = imagesCGArray.compactMap{ $0 }.map { UIImage(cgImage: $0) }
             let endTime = DispatchTime.now()
             print("utility \(Double(endTime.uptimeNanoseconds - startTime.uptimeNanoseconds) / 1_000_000_000) sec")
         })

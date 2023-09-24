@@ -460,8 +460,8 @@
             filePath = "Navigation/Profile/ProfileTable/Photos/PhotosViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "71"
-            endingLineNumber = "71"
+            startingLineNumber = "65"
+            endingLineNumber = "65"
             landmarkName = "tuneView()"
             landmarkType = "7">
          </BreakpointContent>
