@@ -100,13 +100,8 @@ class LogInViewController: UIViewController {
         return textField
     }()
     
-//    private lazy var logInButton: UIButton = {
-//        let button = createButton(title: "Log In", color: UIColor(named: "mainColor") ?? .lightGray, selector: #selector(logInButtonPressed(_:)))
-//        button.layer.cornerRadius = 10
-//        return button
-//    }()
-    
     private lazy var logInButton = CustomButton(title: "Log In", buttonAction: ( { self.logInButtonPressed() } ))
+    private lazy var brutForceButton = CustomButton(title: "Brut force", buttonAction: ( { self.brutForceButtonPressed() } ))
     
     
     override func viewDidLoad() {
@@ -176,6 +171,7 @@ class LogInViewController: UIViewController {
         contentView.addSubview(logoImage)
         contentView.addSubview(stackUserData)
         contentView.addSubview(logInButton)
+        contentView.addSubview(brutForceButton)
         
         stackUserData.addArrangedSubview(loginTextField)
         stackUserData.addArrangedSubview(passwordTextField)
@@ -201,6 +197,13 @@ class LogInViewController: UIViewController {
             logInButton.heightAnchor.constraint(equalToConstant: 50)
         ])
         
+        NSLayoutConstraint.activate([
+            logInButton.topAnchor.constraint(equalTo: stackUserData.bottomAnchor, constant: 16.0),
+            logInButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16.0),
+            logInButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16.0),
+            logInButton.heightAnchor.constraint(equalToConstant: 50)
+        ])
+        
         contentView.subviews.last?.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
     }
     
@@ -216,6 +219,11 @@ class LogInViewController: UIViewController {
         let user = TestUserService().takeUser(login: userInfo.login)        
         let profileViewController = ProfileViewController(user: user)
         navigationController?.pushViewController(profileViewController, animated: true)
+    }
+    
+    func brutForceButtonPressed() {
+        
+        
     }
     
     @objc func loginTextChanged(_ textField: UITextField) {
