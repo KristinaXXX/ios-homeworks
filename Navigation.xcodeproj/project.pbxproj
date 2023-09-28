@@ -30,6 +30,7 @@
 		610D2F412AB9B28D0002DECC /* FeedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 610D2F402AB9B28D0002DECC /* FeedViewModel.swift */; };
 		610D2F432AB9BBCB0002DECC /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 610D2F422AB9BBCB0002DECC /* ProfileViewModel.swift */; };
 		610D2F472AB9C6E80002DECC /* ExtensionUIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 610D2F462AB9C6E80002DECC /* ExtensionUIViewController.swift */; };
+		610D2F4B2AC089B40002DECC /* BruteForceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 610D2F4A2AC089B40002DECC /* BruteForceModel.swift */; };
 		615B8ECD2A7E232600EC58C4 /* StorageService.h in Headers */ = {isa = PBXBuildFile; fileRef = 615B8ECC2A7E232600EC58C4 /* StorageService.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		615B8ED02A7E232600EC58C4 /* StorageService.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 615B8ECA2A7E232600EC58C4 /* StorageService.framework */; };
 		615B8ED12A7E232600EC58C4 /* StorageService.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 615B8ECA2A7E232600EC58C4 /* StorageService.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -96,6 +97,7 @@
 		610D2F402AB9B28D0002DECC /* FeedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewModel.swift; sourceTree = "<group>"; };
 		610D2F422AB9BBCB0002DECC /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		610D2F462AB9C6E80002DECC /* ExtensionUIViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtensionUIViewController.swift; sourceTree = "<group>"; };
+		610D2F4A2AC089B40002DECC /* BruteForceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BruteForceModel.swift; sourceTree = "<group>"; };
 		615B8ECA2A7E232600EC58C4 /* StorageService.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = StorageService.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		615B8ECC2A7E232600EC58C4 /* StorageService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StorageService.h; sourceTree = "<group>"; };
 		615B8EDA2A7F8AD400EC58C4 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -196,6 +198,7 @@
 				61F130402A30A91400E27506 /* Profile */,
 				610BE1B62A265BCB005E7CD1 /* AppDelegate.swift */,
 				610D2F462AB9C6E80002DECC /* ExtensionUIViewController.swift */,
+				610D2F4A2AC089B40002DECC /* BruteForceModel.swift */,
 				610BE1B82A265BCB005E7CD1 /* SceneDelegate.swift */,
 				610D2F2E2AAD91BD0002DECC /* CustomButton.swift */,
 				610BE1BF2A265BCD005E7CD1 /* Assets.xcassets */,
@@ -392,6 +395,7 @@
 				610D2F392AB9A20D0002DECC /* FactoryTab.swift in Sources */,
 				610BE1CB2A26FCCA005E7CD1 /* FeedViewController.swift in Sources */,
 				610D2F432AB9BBCB0002DECC /* ProfileViewModel.swift in Sources */,
+				610D2F4B2AC089B40002DECC /* BruteForceModel.swift in Sources */,
 				61F130422A30A96200E27506 /* ProfileHeaderView.swift in Sources */,
 				610D2F3B2AB9A32F0002DECC /* FeedCoordinator.swift in Sources */,
 				610BE1D32A2B54FE005E7CD1 /* InfoViewController.swift in Sources */,

@@ -15,8 +15,8 @@ final class Checker {
     private let password: String
     
     private init() {
-        login = "111"
-        password = "111"
+        login = "Ivan"
+        password = "1gRt"
     }
     
     public func check(login: String, password: String) -> Bool {

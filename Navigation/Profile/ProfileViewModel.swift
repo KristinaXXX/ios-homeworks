@@ -13,6 +13,7 @@ final class ProfileViewModel {
     var loginDelegate: LoginViewControllerDelegate?
     let userService = TestUserService()
     
+    
     init(coordinator: ProfileCoordinatorProtocol) {
         self.coordinator = coordinator
     }
@@ -25,5 +26,16 @@ final class ProfileViewModel {
 
         let user = userService.takeUser(login: userInfo.login)
         coordinator.showProfile(user: user)
+    }
+    
+    func findPassword(login: String) -> String? {
+        guard !login.isEmpty else {
+            coordinator.showFailLogin()
+            return nil
+            
+        }
+        let bruteForceModel = BruteForceModel()
+        bruteForceModel.loginDelegate = loginDelegate
+        return bruteForceModel.bruteForce(login: login)
     }
 }
