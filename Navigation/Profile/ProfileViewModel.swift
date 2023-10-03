@@ -28,12 +28,15 @@ final class ProfileViewModel {
         coordinator.showProfile(user: user)
     }
     
-    func findPassword(login: String) -> String? {
+    func checkLogin(login: String) -> Bool {
         guard !login.isEmpty else {
             coordinator.showFailLogin()
-            return nil
-            
+            return false
         }
+        return true
+    }
+    
+    func findPassword(login: String) -> String? {
         let bruteForceModel = BruteForceModel()
         bruteForceModel.loginDelegate = loginDelegate
         return bruteForceModel.bruteForce(login: login)

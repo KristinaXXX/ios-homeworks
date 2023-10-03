@@ -102,7 +102,7 @@ class LogInViewController: UIViewController {
     }()
     
     private lazy var logInButton = CustomButton(title: "Log In", buttonAction: ( { self.logInButtonPressed() } ))
-    private lazy var brutForceButton = CustomButton(title: "Brut force", buttonAction: ( { self.brutForceButtonPressed() } ))
+    private lazy var brutForceButton = CustomButton(title: "Brute force", buttonAction: ( { self.brutForceButtonPressed() } ))
     
     private lazy var activityIndicator: UIActivityIndicatorView = {
         let activity = UIActivityIndicatorView()
@@ -237,6 +237,8 @@ class LogInViewController: UIViewController {
     }
     
     func brutForceButtonPressed() {
+        
+        guard profileViewModel.checkLogin(login: userInfo.login) else { return }
         
         let startTime = DispatchTime.now()
         let bruteForce = DispatchWorkItem {
