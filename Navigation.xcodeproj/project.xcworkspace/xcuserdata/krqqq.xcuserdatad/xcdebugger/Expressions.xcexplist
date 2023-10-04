@@ -3,17 +3,21 @@
    version = "1.0">
    <ContextStates>
       <ContextState
+
          contextName = "Checker.check(login:password:):Checker.swift">
          <PersistentStrings>
             <PersistentString
                value = "login == self.login &amp;&amp; password == self.password">
+
             </PersistentString>
          </PersistentStrings>
       </ContextState>
       <ContextState
+
          contextName = "ProfileViewModel.findPassword(login:):ProfileViewModel.swift">
       </ContextState>
       <ContextState
+
          contextName = "ProfileHeaderView.didTapProfileImage():ProfileHeaderView.swift">
       </ContextState>
       <ContextState
@@ -36,6 +40,7 @@
             </PersistentString>
          </PersistentStrings>
       </ContextState>
+
       <ContextState
          contextName = "BruteForceModel.bruteForce(login:):BruteForceModel.swift">
          <PersistentStrings>
