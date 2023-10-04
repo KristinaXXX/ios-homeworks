@@ -240,6 +240,8 @@ class LogInViewController: UIViewController {
         
         guard profileViewModel.checkLogin(login: userInfo.login) else { return }
         
+        brutForceButton.isEnabled = false
+        
         let startTime = DispatchTime.now()
         let bruteForce = DispatchWorkItem {
             let foundPassword = self.profileViewModel.findPassword(login: self.userInfo.login)
@@ -257,6 +259,7 @@ class LogInViewController: UIViewController {
             self.passwordTextField.text? = self.userInfo.password
             self.passwordTextField.isSecureTextEntry = false
             self.activityIndicator.stopAnimating()
+            self.brutForceButton.isEnabled = true
         })
     }
     
