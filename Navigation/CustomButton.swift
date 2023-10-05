@@ -35,5 +35,4 @@ final class CustomButton: UIButton {
         // call closure
         buttonAction()
     }
-
 }

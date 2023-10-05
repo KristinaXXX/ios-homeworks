@@ -15,8 +15,8 @@ final class Checker {
     private let password: String
     
     private init() {
-        login = "111"
-        password = "111"
+        login = "Ivan"
+        password = "1gRt"
     }
     
     public func check(login: String, password: String) -> Bool {
@@ -31,11 +31,11 @@ extension Checker: NSCopying {
 }
 
 protocol LoginViewControllerDelegate {
-    func check(_ sender: LogInViewController, login: String, password: String) -> Bool
+    func check(login: String, password: String) -> Bool
 }
 
 struct LoginInspector: LoginViewControllerDelegate {
-    func check(_ sender: LogInViewController, login: String, password: String) -> Bool {
+    func check(login: String, password: String) -> Bool {
         return Checker.shared.check(login: login, password: password)
     }
 }

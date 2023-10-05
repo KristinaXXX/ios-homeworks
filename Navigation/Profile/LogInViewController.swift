@@ -10,7 +10,8 @@ import UIKit
 class LogInViewController: UIViewController {
 
     private var userInfo = UserInfo()
-    var loginDelegate: LoginViewControllerDelegate?
+    private let profileViewModel: ProfileViewModel
+    var workItem: DispatchWorkItem?
     
     // MARK: - Custom elements
     
@@ -63,7 +64,7 @@ class LogInViewController: UIViewController {
         textField.autocapitalizationType = .none
         textField.leftView = UIView(frame: CGRect(x: view.frame.minX, y: view.frame.minY, width: 12.0, height: view.frame.height))
         textField.leftViewMode = .always
-        textField.placeholder = "Email or phone (111)"
+        textField.placeholder = "Email or phone (Ivan)"
         textField.returnKeyType = UIReturnKeyType.done
         textField.clearButtonMode = UITextField.ViewMode.whileEditing
         textField.contentVerticalAlignment = UIControl.ContentVerticalAlignment.center
@@ -87,7 +88,7 @@ class LogInViewController: UIViewController {
         textField.autocapitalizationType = .none
         textField.leftView = UIView(frame: CGRect(x: view.frame.minX, y: view.frame.minY, width: 12.0, height: view.frame.height))
         textField.leftViewMode = .always
-        textField.placeholder = "Password (111)"
+        textField.placeholder = "Password"
         textField.isSecureTextEntry = true
         textField.returnKeyType = UIReturnKeyType.done
         textField.clearButtonMode = UITextField.ViewMode.whileEditing
@@ -100,14 +101,25 @@ class LogInViewController: UIViewController {
         return textField
     }()
     
-//    private lazy var logInButton: UIButton = {
-//        let button = createButton(title: "Log In", color: UIColor(named: "mainColor") ?? .lightGray, selector: #selector(logInButtonPressed(_:)))
-//        button.layer.cornerRadius = 10
-//        return button
-//    }()
-    
     private lazy var logInButton = CustomButton(title: "Log In", buttonAction: ( { self.logInButtonPressed() } ))
+    private lazy var brutForceButton = CustomButton(title: "Brute force", buttonAction: ( { self.brutForceButtonPressed() } ))
     
+    private lazy var activityIndicator: UIActivityIndicatorView = {
+        let activity = UIActivityIndicatorView()
+        activity.translatesAutoresizingMaskIntoConstraints = false
+        activity.hidesWhenStopped = true
+        activity.color = .white
+        return activity
+    }()
+    
+    init(profileViewModel: ProfileViewModel) {
+        self.profileViewModel = profileViewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -176,6 +188,8 @@ class LogInViewController: UIViewController {
         contentView.addSubview(logoImage)
         contentView.addSubview(stackUserData)
         contentView.addSubview(logInButton)
+        contentView.addSubview(brutForceButton)
+        contentView.addSubview(activityIndicator)
         
         stackUserData.addArrangedSubview(loginTextField)
         stackUserData.addArrangedSubview(passwordTextField)
@@ -188,7 +202,7 @@ class LogInViewController: UIViewController {
         ])
         
         NSLayoutConstraint.activate([
-            stackUserData.topAnchor.constraint(equalTo: logoImage.bottomAnchor, constant: 120.0),
+            stackUserData.topAnchor.constraint(equalTo: logoImage.bottomAnchor, constant: 70.0),
             stackUserData.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16.0),
             stackUserData.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16.0),
             stackUserData.heightAnchor.constraint(equalToConstant: 100)
@@ -201,21 +215,52 @@ class LogInViewController: UIViewController {
             logInButton.heightAnchor.constraint(equalToConstant: 50)
         ])
         
+        NSLayoutConstraint.activate([
+            brutForceButton.topAnchor.constraint(equalTo: logInButton.bottomAnchor, constant: 16.0),
+            brutForceButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16.0),
+            brutForceButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16.0),
+            brutForceButton.heightAnchor.constraint(equalToConstant: 50)
+        ])
+        
+        NSLayoutConstraint.activate([
+            activityIndicator.centerXAnchor.constraint(equalTo: brutForceButton.centerXAnchor, constant: 60),
+            activityIndicator.centerYAnchor.constraint(equalTo: brutForceButton.centerYAnchor)
+        ])
+
         contentView.subviews.last?.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
     }
     
     // MARK: - Selectors
     
     func logInButtonPressed() {
+        profileViewModel.checkLoginToProfile(userInfo: userInfo)
+    }
+    
+    func brutForceButtonPressed() {
         
-        guard loginDelegate?.check(self, login: userInfo.login, password: userInfo.password) == true else {
-            showFailLogin()
-            return
+        guard profileViewModel.checkLogin(login: userInfo.login) else { return }
+        
+        brutForceButton.isEnabled = false
+        
+        let startTime = DispatchTime.now()
+        let bruteForce = DispatchWorkItem {
+            let foundPassword = self.profileViewModel.findPassword(login: self.userInfo.login)
+            self.userInfo.password = foundPassword ?? ""
+            let endTime = DispatchTime.now()
+            print("Brute force: \(Double(endTime.uptimeNanoseconds - startTime.uptimeNanoseconds) / 1_000_000_000) sec")
         }
-
-        let user = TestUserService().takeUser(login: userInfo.login)        
-        let profileViewController = ProfileViewController(user: user)
-        navigationController?.pushViewController(profileViewController, animated: true)
+        
+        workItem = bruteForce
+        
+        activityIndicator.startAnimating()
+        DispatchQueue.global().asyncAfter(deadline: .now(), execute: bruteForce)
+        
+        workItem?.notify(queue: .main, execute: {
+            self.passwordTextField.text? = self.userInfo.password
+            self.passwordTextField.isSecureTextEntry = false
+            self.activityIndicator.stopAnimating()
+            self.brutForceButton.isEnabled = true
+        })
     }
     
     @objc func loginTextChanged(_ textField: UITextField) {
@@ -224,12 +269,6 @@ class LogInViewController: UIViewController {
     
     @objc func passwordTextChanged(_ textField: UITextField) {
         userInfo.password = textField.text ?? ""
-    }
-    
-    private func showFailLogin() {
-        let alert = UIAlertController(title: "Fail", message: "Login isn't correct", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default))
-        self.present(alert, animated: true, completion: nil)
     }
     
     // MARK: - Keyboard

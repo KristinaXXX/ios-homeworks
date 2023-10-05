@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import StorageService
 
 final class FeedModel {
     
@@ -13,5 +14,9 @@ final class FeedModel {
     
     public func check(word: String) -> Bool {
         return word == secretWord
+    }
+    
+    public func takePost(text: String) -> Post {
+        Post(author: text)
     }
 }
