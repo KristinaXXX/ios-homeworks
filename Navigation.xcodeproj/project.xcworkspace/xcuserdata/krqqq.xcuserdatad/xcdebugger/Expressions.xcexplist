@@ -3,60 +3,13 @@
    version = "1.0">
    <ContextStates>
       <ContextState
-
-         contextName = "Checker.check(login:password:):Checker.swift">
+         contextName = "ProfileCoordinator.showForgotLogin():ProfileCoordinator.swift">
          <PersistentStrings>
             <PersistentString
-               value = "login == self.login &amp;&amp; password == self.password">
-
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-
-         contextName = "ProfileViewModel.findPassword(login:):ProfileViewModel.swift">
-      </ContextState>
-      <ContextState
-
-         contextName = "ProfileHeaderView.didTapProfileImage():ProfileHeaderView.swift">
-      </ContextState>
-      <ContextState
-         contextName = "closure #1 in closure #1 in ProfileHeaderView.closeProfileImage():ProfileHeaderView.swift">
-      </ContextState>
-      <ContextState
-         contextName = "closure #1 in ProfileHeaderView.didTapProfileImage():ProfileHeaderView.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "UIScreen.main.bounds.midX">
+               value = "navigationController">
             </PersistentString>
             <PersistentString
-               value = "UIScreen.main.bounds.midY">
-            </PersistentString>
-            <PersistentString
-               value = "UIScreen.main.bounds">
-            </PersistentString>
-            <PersistentString
-               value = "profileImagePoint">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-
-      <ContextState
-         contextName = "BruteForceModel.bruteForce(login:):BruteForceModel.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "loginDelegate?.check(login: login, password: password)">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "closure #1 in PhotosViewController.tuneView():PhotosViewController.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "Double(endTime.uptimeNanoseconds - startTime.uptimeNanoseconds) / 1_000_000_000">
-            </PersistentString>
-            <PersistentString
-               value = "startTime.distance(to: endTime)">
+               value = "navigationController?.presentedViewController">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

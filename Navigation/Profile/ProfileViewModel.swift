@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 final class ProfileViewModel {
 
@@ -40,5 +41,9 @@ final class ProfileViewModel {
         let bruteForceModel = BruteForceModel()
         bruteForceModel.loginDelegate = loginDelegate
         return bruteForceModel.bruteForce(login: login)
+    }
+    
+    func rememberPassword(action: @escaping (UIAlertAction) -> Void) {
+        coordinator.showForgotLogin(action: action)
     }
 }

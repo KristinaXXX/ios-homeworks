@@ -13,6 +13,8 @@ class LogInViewController: UIViewController {
     private let profileViewModel: ProfileViewModel
     var workItem: DispatchWorkItem?
     
+    private var timer: Timer?
+    
     // MARK: - Custom elements
     
     private lazy var scrollView: UIScrollView = {
@@ -131,11 +133,16 @@ class LogInViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setupKeyboardObservers()
+        addTimer()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         removeKeyboardObservers()
+        if timer != nil {
+            timer?.invalidate()
+            timer = nil
+        }
     }
     
     // MARK: - Actions
@@ -228,6 +235,18 @@ class LogInViewController: UIViewController {
         ])
 
         contentView.subviews.last?.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
+        brutForceButton.isHidden = true
+    }
+    
+    func addTimer() {
+        timer = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: true, block: { [weak self] _ in
+            self?.profileViewModel.rememberPassword(action: { _ in
+                self?.loginTextField.text = "Ivan"
+                self?.passwordTextField.text = "1gRt"
+                self?.timer?.invalidate()
+                self?.timer = nil
+            })
+        })
     }
     
     // MARK: - Selectors
