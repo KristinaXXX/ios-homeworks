@@ -20,18 +20,28 @@ final class ProfileViewModel {
     }
     
     func checkLoginToProfile(userInfo: UserInfo) {
-        guard loginDelegate?.check(login: userInfo.login, password: userInfo.password) == true else {
-            coordinator.showFailLogin()
-            return
+        
+        do {
+            try loginDelegate?.check(login: userInfo.login, password: userInfo.password)
+            let user = userService.takeUser(login: userInfo.login)
+            coordinator.showProfile(user: user)
+        } catch LoginError.emptyLogin {
+            coordinator.showFailLogin(text: "Login can't be empty.")
+        } catch LoginError.emptyPassword {
+            coordinator.showFailLogin(text: "Password can't be empty.")
+        } catch LoginError.shortLogin {
+            coordinator.showFailLogin(text: "login must be longer than 3 characters")
+        } catch LoginError.unauthorized {
+            coordinator.showFailLogin(text: "The login is not a valid.")
+        } catch {
+            coordinator.showFailLogin(text: "Error")
         }
-
-        let user = userService.takeUser(login: userInfo.login)
-        coordinator.showProfile(user: user)
+       
     }
     
     func checkLogin(login: String) -> Bool {
         guard !login.isEmpty else {
-            coordinator.showFailLogin()
+            coordinator.showFailLogin(text: "Login can't be empty.")
             return false
         }
         return true

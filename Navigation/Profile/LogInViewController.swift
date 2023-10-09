@@ -242,7 +242,9 @@ class LogInViewController: UIViewController {
         timer = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: true, block: { [weak self] _ in
             self?.profileViewModel.rememberPassword(action: { _ in
                 self?.loginTextField.text = "Ivan"
+                self?.userInfo.login = "Ivan"
                 self?.passwordTextField.text = "1gRt"
+                self?.userInfo.password = "1gRt"
                 self?.timer?.invalidate()
                 self?.timer = nil
             })

@@ -8,7 +8,7 @@
 import UIKit
 
 protocol ProfileCoordinatorProtocol {
-    func showFailLogin()
+    func showFailLogin(text: String)
     func showProfile(user: User)
     func showForgotLogin(action: @escaping (UIAlertAction) -> Void)
 }
@@ -17,8 +17,8 @@ final class ProfileCoordinator: ProfileCoordinatorProtocol {
 
     var navigationController: UINavigationController?
 
-    func showFailLogin() {
-        let alert = UIAlertController(title: "Fail", message: "Login isn't correct", preferredStyle: .alert)
+    func showFailLogin(text: String) {
+        let alert = UIAlertController(title: "Fail", message: text, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default))
         navigationController?.present(alert, animated: true, completion: nil)
     }
