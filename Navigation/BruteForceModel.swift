@@ -19,8 +19,12 @@ class BruteForceModel {
         
         while !result {
             password = generateBruteForce(password, fromArray: ALLOWED_CHARACTERS)
-            guard loginDelegate?.check(login: login, password: password) == true else { continue }
-            result = true
+            do {
+                try loginDelegate?.check(login: login, password: password)
+                result = true
+            } catch {
+                
+            }
         }
         return password
     }

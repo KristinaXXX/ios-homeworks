@@ -10,7 +10,7 @@ import iOSIntPackage
 
 class PhotosViewController: UIViewController {
 
-    var photos: [UIImage] = Photos.makeImage() {
+    var photos: [UIImage] = [] {
         didSet {
             DispatchQueue.main.async {
                 self.photoCollection.reloadData()
@@ -38,9 +38,34 @@ class PhotosViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        loadData()
         addSubviews()
         setupConstraints()
         tuneView()
+    }
+    
+    private func loadData() {
+        
+        Photos.makeImage(completion: { [weak self] result in
+            switch result {
+            case .success(let photosArray):
+                self?.photos = photosArray
+            case .failure(let error):
+                var errorText = ""
+                switch error {
+                case .notFound:
+                    errorText = "Resource is not found"
+                case .forbidden:
+                    errorText = "Forbidden"
+                case .badRequest:
+                    errorText = "Bad request"
+                }
+                let alert = UIAlertController(title: "Load error", message: errorText, preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .default))
+                self?.navigationController?.present(alert, animated: true, completion: nil)
+            }
+        })
+        
     }
     
     private func addSubviews() {
