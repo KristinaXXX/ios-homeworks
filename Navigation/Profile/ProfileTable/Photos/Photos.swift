@@ -21,11 +21,24 @@ extension Photos {
         return photoArray
     }
     
-    static func makeImage() -> [UIImage] {
-        var photoArray: [UIImage] = []
-        for i in 1...20 {
-            photoArray.append(UIImage(named: "house_\(i)") ?? UIImage())
+    static func makeImage(completion: @escaping (Result<[UIImage], PhotosError>) -> Void) {
+        
+        let randomInt = Int.random(in: 0...3)
+        
+        switch randomInt {
+        case 0:
+            var photoArray: [UIImage] = []
+            for i in 1...20 {
+                photoArray.append(UIImage(named: "house_\(i)") ?? UIImage())
+            }
+            completion(.success(photoArray))
+        case 1:
+            completion(.failure(.badRequest))
+        case 2:
+            completion(.failure(.forbidden))
+        default:
+            completion(.failure(.notFound))
         }
-        return photoArray
+
     }
 }

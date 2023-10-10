@@ -10,7 +10,12 @@ import Foundation
 enum LoginError: Error {
     case emptyLogin
     case emptyPassword
-    //case forbiddenSymbols
     case shortLogin
     case unauthorized
+}
+
+enum PhotosError: Error {
+    case badRequest
+    case notFound
+    case forbidden
 }
