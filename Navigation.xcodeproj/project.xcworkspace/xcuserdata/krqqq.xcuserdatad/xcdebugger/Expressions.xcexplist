@@ -3,27 +3,15 @@
    version = "1.0">
    <ContextStates>
       <ContextState
-         contextName = "closure #1 in ProfileHeaderView.didTapProfileImage():ProfileHeaderView.swift">
+         contextName = "ProfileCoordinator.showForgotLogin():ProfileCoordinator.swift">
          <PersistentStrings>
             <PersistentString
-               value = "UIScreen.main.bounds.midX">
+               value = "navigationController">
             </PersistentString>
             <PersistentString
-               value = "UIScreen.main.bounds.midY">
-            </PersistentString>
-            <PersistentString
-               value = "UIScreen.main.bounds">
-            </PersistentString>
-            <PersistentString
-               value = "profileImagePoint">
+               value = "navigationController?.presentedViewController">
             </PersistentString>
          </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "closure #1 in closure #1 in ProfileHeaderView.closeProfileImage():ProfileHeaderView.swift">
-      </ContextState>
-      <ContextState
-         contextName = "ProfileHeaderView.didTapProfileImage():ProfileHeaderView.swift">
       </ContextState>
    </ContextStates>
 </VariablesViewState>

@@ -18,6 +18,10 @@ final class FeedViewModel {
     }
     
     func checkWordShowResult(_ word: String) {
+        
+        if word == "///" {
+            preconditionFailure("Shut down")
+        }
         let result = feedModel.check(word: word)
         coordinator.showCheckResult(result: result)
     }

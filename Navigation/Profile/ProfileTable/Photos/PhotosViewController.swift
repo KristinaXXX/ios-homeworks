@@ -10,8 +10,15 @@ import iOSIntPackage
 
 class PhotosViewController: UIViewController {
 
-    var photos: [UIImage] = []
-    let imagePublisherFacade = ImagePublisherFacade()
+    var photos: [UIImage] = [] {
+        didSet {
+            DispatchQueue.main.async {
+                self.photoCollection.reloadData()
+            }
+        }
+    }
+
+    let imageProcessor = ImageProcessor()
    
     private lazy var photoCollection: UICollectionView = {
         let viewLayout = UICollectionViewFlowLayout()
@@ -31,12 +38,34 @@ class PhotosViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        loadData()
         addSubviews()
         setupConstraints()
         tuneView()
+    }
+    
+    private func loadData() {
         
-        imagePublisherFacade.subscribe(self)
-        imagePublisherFacade.addImagesWithTimer(time: 0.5, repeat: 20, userImages: Photos.makeImage())
+        Photos.makeImage(completion: { [weak self] result in
+            switch result {
+            case .success(let photosArray):
+                self?.photos = photosArray
+            case .failure(let error):
+                var errorText = ""
+                switch error {
+                case .notFound:
+                    errorText = "Resource is not found"
+                case .forbidden:
+                    errorText = "Forbidden"
+                case .badRequest:
+                    errorText = "Bad request"
+                }
+                let alert = UIAlertController(title: "Load error", message: errorText, preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .default))
+                self?.navigationController?.present(alert, animated: true, completion: nil)
+            }
+        })
+        
     }
     
     private func addSubviews() {
@@ -49,6 +78,17 @@ class PhotosViewController: UIViewController {
         
         photoCollection.dataSource = self
         photoCollection.delegate = self
+        
+        let startTime = DispatchTime.now()
+        
+        imageProcessor.processImagesOnThread(sourceImages: photos,
+                                             filter: ColorFilter.noir,
+                                             qos: QualityOfService.utility,
+                                             completion: { (imagesCGArray: [CGImage?]) in
+            self.photos = imagesCGArray.compactMap{ $0 }.map { UIImage(cgImage: $0) }
+            let endTime = DispatchTime.now()
+            print("utility \(Double(endTime.uptimeNanoseconds - startTime.uptimeNanoseconds) / 1_000_000_000) sec")
+        })
     }
     
     func setupConstraints() {
@@ -69,7 +109,6 @@ class PhotosViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        imagePublisherFacade.removeSubscription(for: self)
         navigationController?.navigationBar.isHidden = true
     }
 }
@@ -117,12 +156,5 @@ extension PhotosViewController: UICollectionViewDelegateFlowLayout {
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         8
-    }
-}
-
-extension PhotosViewController: ImageLibrarySubscriber {
-    func receive(images: [UIImage]) {
-        photos = images
-        photoCollection.reloadData()
     }
 }

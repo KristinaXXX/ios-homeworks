@@ -11,6 +11,9 @@ class LogInViewController: UIViewController {
 
     private var userInfo = UserInfo()
     private let profileViewModel: ProfileViewModel
+    var workItem: DispatchWorkItem?
+    
+    private var timer: Timer?
     
     // MARK: - Custom elements
     
@@ -63,7 +66,7 @@ class LogInViewController: UIViewController {
         textField.autocapitalizationType = .none
         textField.leftView = UIView(frame: CGRect(x: view.frame.minX, y: view.frame.minY, width: 12.0, height: view.frame.height))
         textField.leftViewMode = .always
-        textField.placeholder = "Email or phone (111)"
+        textField.placeholder = "Email or phone (Ivan)"
         textField.returnKeyType = UIReturnKeyType.done
         textField.clearButtonMode = UITextField.ViewMode.whileEditing
         textField.contentVerticalAlignment = UIControl.ContentVerticalAlignment.center
@@ -87,7 +90,7 @@ class LogInViewController: UIViewController {
         textField.autocapitalizationType = .none
         textField.leftView = UIView(frame: CGRect(x: view.frame.minX, y: view.frame.minY, width: 12.0, height: view.frame.height))
         textField.leftViewMode = .always
-        textField.placeholder = "Password (111)"
+        textField.placeholder = "Password"
         textField.isSecureTextEntry = true
         textField.returnKeyType = UIReturnKeyType.done
         textField.clearButtonMode = UITextField.ViewMode.whileEditing
@@ -101,6 +104,15 @@ class LogInViewController: UIViewController {
     }()
     
     private lazy var logInButton = CustomButton(title: "Log In", buttonAction: ( { self.logInButtonPressed() } ))
+    private lazy var brutForceButton = CustomButton(title: "Brute force", buttonAction: ( { self.brutForceButtonPressed() } ))
+    
+    private lazy var activityIndicator: UIActivityIndicatorView = {
+        let activity = UIActivityIndicatorView()
+        activity.translatesAutoresizingMaskIntoConstraints = false
+        activity.hidesWhenStopped = true
+        activity.color = .white
+        return activity
+    }()
     
     init(profileViewModel: ProfileViewModel) {
         self.profileViewModel = profileViewModel
@@ -121,11 +133,16 @@ class LogInViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setupKeyboardObservers()
+        addTimer()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         removeKeyboardObservers()
+        if timer != nil {
+            timer?.invalidate()
+            timer = nil
+        }
     }
     
     // MARK: - Actions
@@ -178,6 +195,8 @@ class LogInViewController: UIViewController {
         contentView.addSubview(logoImage)
         contentView.addSubview(stackUserData)
         contentView.addSubview(logInButton)
+        contentView.addSubview(brutForceButton)
+        contentView.addSubview(activityIndicator)
         
         stackUserData.addArrangedSubview(loginTextField)
         stackUserData.addArrangedSubview(passwordTextField)
@@ -190,7 +209,7 @@ class LogInViewController: UIViewController {
         ])
         
         NSLayoutConstraint.activate([
-            stackUserData.topAnchor.constraint(equalTo: logoImage.bottomAnchor, constant: 120.0),
+            stackUserData.topAnchor.constraint(equalTo: logoImage.bottomAnchor, constant: 70.0),
             stackUserData.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16.0),
             stackUserData.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16.0),
             stackUserData.heightAnchor.constraint(equalToConstant: 100)
@@ -203,13 +222,66 @@ class LogInViewController: UIViewController {
             logInButton.heightAnchor.constraint(equalToConstant: 50)
         ])
         
+        NSLayoutConstraint.activate([
+            brutForceButton.topAnchor.constraint(equalTo: logInButton.bottomAnchor, constant: 16.0),
+            brutForceButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16.0),
+            brutForceButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16.0),
+            brutForceButton.heightAnchor.constraint(equalToConstant: 50)
+        ])
+        
+        NSLayoutConstraint.activate([
+            activityIndicator.centerXAnchor.constraint(equalTo: brutForceButton.centerXAnchor, constant: 60),
+            activityIndicator.centerYAnchor.constraint(equalTo: brutForceButton.centerYAnchor)
+        ])
+
         contentView.subviews.last?.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
+        brutForceButton.isHidden = true
+    }
+    
+    func addTimer() {
+        timer = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: true, block: { [weak self] _ in
+            self?.profileViewModel.rememberPassword(action: { _ in
+                self?.loginTextField.text = "Ivan"
+                self?.userInfo.login = "Ivan"
+                self?.passwordTextField.text = "1gRt"
+                self?.userInfo.password = "1gRt"
+                self?.timer?.invalidate()
+                self?.timer = nil
+            })
+        })
     }
     
     // MARK: - Selectors
     
     func logInButtonPressed() {
         profileViewModel.checkLoginToProfile(userInfo: userInfo)
+    }
+    
+    func brutForceButtonPressed() {
+        
+        guard profileViewModel.checkLogin(login: userInfo.login) else { return }
+        
+        brutForceButton.isEnabled = false
+        
+        let startTime = DispatchTime.now()
+        let bruteForce = DispatchWorkItem {
+            let foundPassword = self.profileViewModel.findPassword(login: self.userInfo.login)
+            self.userInfo.password = foundPassword ?? ""
+            let endTime = DispatchTime.now()
+            print("Brute force: \(Double(endTime.uptimeNanoseconds - startTime.uptimeNanoseconds) / 1_000_000_000) sec")
+        }
+        
+        workItem = bruteForce
+        
+        activityIndicator.startAnimating()
+        DispatchQueue.global().asyncAfter(deadline: .now(), execute: bruteForce)
+        
+        workItem?.notify(queue: .main, execute: {
+            self.passwordTextField.text? = self.userInfo.password
+            self.passwordTextField.isSecureTextEntry = false
+            self.activityIndicator.stopAnimating()
+            self.brutForceButton.isEnabled = true
+        })
     }
     
     @objc func loginTextChanged(_ textField: UITextField) {
