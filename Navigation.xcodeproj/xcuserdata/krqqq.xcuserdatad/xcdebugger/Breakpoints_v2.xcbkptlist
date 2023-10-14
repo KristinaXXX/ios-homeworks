@@ -628,69 +628,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "9401CC17-F59A-43B5-BD7E-DEE38BFC1F5A"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Navigation/Network/NetworkService.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "14"
-            endingLineNumber = "14"
-            landmarkName = "request(for:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "9401CC17-F59A-43B5-BD7E-DEE38BFC1F5A - 4f99ec5316d5fa61"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "static Navigation.NetworkService.request(for: Navigation.AppConfiguration) -&gt; ()"
-                  moduleName = "Navigation"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/krqqq/Documents/%D0%9F%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D1%8B/Part%203/Navigation/Navigation/Network/NetworkService.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "15"
-                  endingLineNumber = "15"
-                  offsetFromSymbolStart = "347">
-               </Location>
-               <Location
-                  uuid = "9401CC17-F59A-43B5-BD7E-DEE38BFC1F5A - 4f99ec5316d5fa61"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "static Navigation.NetworkService.request(for: Navigation.AppConfiguration) -&gt; ()"
-                  moduleName = "Navigation"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/krqqq/Documents/%D0%9F%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D1%8B/Part%203/Navigation/Navigation/Network/NetworkService.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "15"
-                  endingLineNumber = "15"
-                  offsetFromSymbolStart = "321">
-               </Location>
-               <Location
-                  uuid = "9401CC17-F59A-43B5-BD7E-DEE38BFC1F5A - 4f99ec5316d5fa61"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "static Navigation.NetworkService.request(for: Navigation.AppConfiguration) -&gt; ()"
-                  moduleName = "Navigation"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/krqqq/Documents/%D0%9F%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D1%8B/Part%203/Navigation/Navigation/Network/NetworkService.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "15"
-                  endingLineNumber = "15"
-                  offsetFromSymbolStart = "365">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "AB881583-3681-4097-BF28-CA3BE2BFB852"
             shouldBeEnabled = "No"
             ignoreCount = "0"
@@ -698,9 +635,9 @@
             filePath = "Navigation/Network/NetworkService.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "25"
-            endingLineNumber = "25"
-            landmarkName = "request(for:)"
+            startingLineNumber = "15"
+            endingLineNumber = "15"
+            landmarkName = "request(url:)"
             landmarkType = "7">
             <Locations>
                <Location
@@ -776,9 +713,9 @@
             filePath = "Navigation/Network/NetworkService.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "26"
-            endingLineNumber = "26"
-            landmarkName = "request(for:)"
+            startingLineNumber = "16"
+            endingLineNumber = "16"
+            landmarkName = "request(url:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -794,7 +731,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "12"
             endingLineNumber = "12"
-            landmarkName = "request(for:)"
+            landmarkName = "request(url:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -808,9 +745,9 @@
             filePath = "Navigation/Network/NetworkService.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "24"
-            endingLineNumber = "24"
-            landmarkName = "request(for:)"
+            startingLineNumber = "14"
+            endingLineNumber = "14"
+            landmarkName = "request(url:)"
             landmarkType = "7">
             <Locations>
                <Location

@@ -8,20 +8,10 @@
 import Foundation
 
 struct NetworkService {
-    static func request(for configuration: AppConfiguration) {
+    static func request(url: URL) {
         let session = URLSession.shared
         
-        var urlC: URL
-        switch configuration {
-        case .c1(let url):
-            urlC = url
-        case .c2(let url):
-            urlC = url
-        case .c3(let url):
-            urlC = url
-        }
-        
-        let task = session.dataTask(with: urlC) { data, response, error in
+        let task = session.dataTask(with: url) { data, response, error in
             
             if let error {
                 print("Ошибка: \(error.localizedDescription)")
@@ -52,8 +42,12 @@ struct NetworkService {
     }
 }
 
-enum AppConfiguration {
-    case c1(URL)
-    case c2(URL)
-    case c3(URL)
+enum AppConfiguration: String, CaseIterable {
+    case people = "https://swapi.dev/api/people"
+    case starships = "https://swapi.dev/api/starships"
+    case planets = "https://swapi.dev/api/planets"
+    
+    var url: URL? {
+        URL(string: self.rawValue)
+    }
 }

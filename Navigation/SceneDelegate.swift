@@ -22,8 +22,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window.rootViewController = mainCoordinator.startApplication()
         window.makeKeyAndVisible()
         
-        let appConfiguration: AppConfiguration = .c1(URL(string: "https://swapi.dev/api/people/8")!)
-        NetworkService.request(for: appConfiguration)
+        NetworkService.request(url: AppConfiguration.people.url!)
         
         self.window = window
     }
