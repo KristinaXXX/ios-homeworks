@@ -19,3 +19,11 @@ enum PhotosError: Error {
     case notFound
     case forbidden
 }
+
+enum NetworkError: Error {
+    case error(String)
+    case parseError
+    case emptyData
+    
+    //var description: String
+}

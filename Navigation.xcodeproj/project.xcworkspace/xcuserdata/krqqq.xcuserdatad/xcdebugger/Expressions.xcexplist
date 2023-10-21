@@ -13,5 +13,19 @@
             </PersistentString>
          </PersistentStrings>
       </ContextState>
+      <ContextState
+         contextName = "closure #1 in static NetworkService.requestJSONSerialization(url:completion:):NetworkService.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "json[&apos;title&apos;]">
+            </PersistentString>
+            <PersistentString
+               value = "json as? Todos">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "closure #1 in InfoViewController.loadData():InfoViewController.swift">
+      </ContextState>
    </ContextStates>
 </VariablesViewState>
