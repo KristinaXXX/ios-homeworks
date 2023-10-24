@@ -26,6 +26,7 @@ final class ProfileCoordinator: ProfileCoordinatorProtocol {
     func showProfile(user: User) {
         let profileViewController = ProfileViewController(user: user)
         navigationController?.pushViewController(profileViewController, animated: true)
+        navigationController?.tabBarController?.tabBar.isHidden = false
     }
     
     func showForgotLogin(action: @escaping (UIAlertAction) -> Void) {

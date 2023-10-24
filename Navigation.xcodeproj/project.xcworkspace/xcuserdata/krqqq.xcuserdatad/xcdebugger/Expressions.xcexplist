@@ -3,17 +3,6 @@
    version = "1.0">
    <ContextStates>
       <ContextState
-         contextName = "ProfileCoordinator.showForgotLogin():ProfileCoordinator.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "navigationController">
-            </PersistentString>
-            <PersistentString
-               value = "navigationController?.presentedViewController">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
          contextName = "closure #1 in static NetworkService.requestJSONSerialization(url:completion:):NetworkService.swift">
          <PersistentStrings>
             <PersistentString
@@ -26,6 +15,28 @@
       </ContextState>
       <ContextState
          contextName = "closure #1 in InfoViewController.loadData():InfoViewController.swift">
+      </ContextState>
+      <ContextState
+         contextName = "closure #1 in static CheckerService.checkCredentials(email:password:completion:):CheckerService.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "errNS.code">
+            </PersistentString>
+            <PersistentString
+               value = "AuthErrorCode.internalError.rawValue">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "ProfileCoordinator.showForgotLogin():ProfileCoordinator.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "navigationController">
+            </PersistentString>
+            <PersistentString
+               value = "navigationController?.presentedViewController">
+            </PersistentString>
+         </PersistentStrings>
       </ContextState>
    </ContextStates>
 </VariablesViewState>

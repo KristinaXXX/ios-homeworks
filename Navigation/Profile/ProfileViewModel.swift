@@ -19,24 +19,61 @@ final class ProfileViewModel {
         self.coordinator = coordinator
     }
     
-    func checkLoginToProfile(userInfo: UserInfo) {
+    private func checkLoginToProfile(userInfo: UserInfo) -> Bool {
         
         do {
             try loginDelegate?.check(login: userInfo.login, password: userInfo.password)
-            let user = userService.takeUser(login: userInfo.login)
-            coordinator.showProfile(user: user)
+            return true
         } catch LoginError.emptyLogin {
             coordinator.showFailLogin(text: "Login can't be empty.")
-        } catch LoginError.emptyPassword {
-            coordinator.showFailLogin(text: "Password can't be empty.")
-        } catch LoginError.shortLogin {
-            coordinator.showFailLogin(text: "login must be longer than 3 characters")
+        } catch LoginError.shortPassword {
+            coordinator.showFailLogin(text: "Password must be longer than 6 characters")
+        } catch LoginError.invalidEmail {
+            coordinator.showFailLogin(text: "Email is invalid")
         } catch LoginError.unauthorized {
             coordinator.showFailLogin(text: "The login is not a valid.")
         } catch {
             coordinator.showFailLogin(text: "Error")
         }
+        
+        return false
        
+    }
+    
+    func logIn(userInfo: UserInfo) {
+        
+        if checkLoginToProfile(userInfo: userInfo) {
+            CheckerService.checkCredentials(email: userInfo.login, password: userInfo.password) { [weak self]
+                result in
+                switch result {
+                case .success(let fireBaseUser):
+                    let user = User(email: fireBaseUser.user.email!)
+                    self?.coordinator.showProfile(user: user)
+                case.failure(let error):
+                    self?.coordinator.showFailLogin(text: error.localizedDescription)
+                }
+            }
+        }
+    }
+    
+    func signOut() {
+        CheckerService.signOut()
+    }
+    
+    func sighUp(userInfo: UserInfo) {
+        
+        if checkLoginToProfile(userInfo: userInfo) {
+            CheckerService.signUp(email: userInfo.login, password: userInfo.password) { [weak self]
+                result in
+                switch result {
+                case .success(let fireBaseUser):
+                    let user = User(email: fireBaseUser.user.email!)
+                    self?.coordinator.showProfile(user: user)
+                case.failure(let error):
+                    self?.coordinator.showFailLogin(text: error.localizedDescription)
+                }
+            }
+        }
     }
     
     func checkLogin(login: String) -> Bool {

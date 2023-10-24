@@ -24,7 +24,8 @@ final class MainTabBarController: UITabBarController {
             profileVC.navigationController
         ]
         
-        selectedIndex = 0
+        selectedIndex = 1
         tabBar.backgroundColor = .systemGray6
+        tabBar.isHidden = true
     }
 }
