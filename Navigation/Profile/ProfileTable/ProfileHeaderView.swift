@@ -141,7 +141,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
            
         NSLayoutConstraint.activate([
             showButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16.0),
-            showButton.topAnchor.constraint(equalTo: profileImage.bottomAnchor, constant: 40.0),
+            showButton.topAnchor.constraint(equalTo: profileImage.bottomAnchor, constant: 25.0), //40
             showButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16.0),
             showButton.heightAnchor.constraint(equalToConstant: 50.0)
         ])
