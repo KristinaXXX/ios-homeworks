@@ -9,9 +9,9 @@ import Foundation
 
 enum LoginError: Error {
     case emptyLogin
-    case emptyPassword
-    case shortLogin
+    case shortPassword
     case unauthorized
+    case invalidEmail
 }
 
 enum PhotosError: Error {

@@ -35,22 +35,22 @@ protocol LoginViewControllerDelegate {
 }
 
 struct LoginInspector: LoginViewControllerDelegate {
+    
     func check(login: String, password: String) throws {
-        
-        #if DEBUG
-        //true
-        #else
         if login.isEmpty {
             throw LoginError.emptyLogin
-        } else if login.count < 3 {
-            throw LoginError.shortLogin
-        } else if password.isEmpty {
-            throw LoginError.emptyPassword
-        } else if !Checker.shared.check(login: login, password: password) {
-            throw LoginError.unauthorized
+        } else if !isValidEmail(login) {
+            throw LoginError.invalidEmail
+        } else if password.count < 6 {
+            throw LoginError.shortPassword
         }
-        #endif
+    }
+    
+    private func isValidEmail(_ email: String) -> Bool {
+        let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
 
+        let emailPred = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
+        return emailPred.evaluate(with: email)
     }
 }
 

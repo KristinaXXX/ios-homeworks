@@ -20,6 +20,13 @@ class User {
         self.avatar = avatar
     }
     
+    init(email: String) {
+        self.login = email
+        self.fullName = email
+        self.status = "Reading..."
+        self.avatar = UIImage(named: "avatarImage") ?? UIImage()
+    }
+    
     // default
     init() {
         self.login = "IvanPPP"
