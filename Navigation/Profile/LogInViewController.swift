@@ -186,7 +186,7 @@ class LogInViewController: UIViewController {
     func addSubviews() {
         view.addSubview(scrollView)
         scrollView.addSubview(contentView)
-        setupConstraints()
+        //setupConstraints()
         setupContentOfScrollView()
     }
     
