@@ -9,26 +9,36 @@ import Foundation
 
 final class SharedViewModel {
 
-    private let model: SharedModel
     private let coordinator: SharedCoordinatorProtocol
-    private var sharedPosts = [SharedPost]()
     
-    init(model: SharedModel, coordinator: SharedCoordinatorProtocol) {
-        self.model = model
+    init(coordinator: SharedCoordinatorProtocol) {
         self.coordinator = coordinator
-        updatePosts()
     }
     
     func postCount() -> Int {
-        sharedPosts.count
+        SharedService.shared.sharedPosts.count
     }
     
     func selectPost(selectRow: Int) -> SharedPost {
-        sharedPosts[selectRow]
+        SharedService.shared.sharedPosts[selectRow]
     }
     
-    func updatePosts() {
-        model.loadPosts()
-        sharedPosts = model.getPosts()
+    func deletePost(selectRow: Int, completion: @escaping ([SharedPost]) -> Void) {
+        let post = selectPost(selectRow: selectRow)
+        SharedService.shared.deletePost(post: post) { result in
+            completion(result)
+        }
+    }
+    
+    func setFilter(completion: @escaping () -> Void) {
+        coordinator.showSetFilter {
+            completion()
+        }
+    }
+    
+    func cancelFilter(completion: @escaping () -> Void) {
+        SharedService.shared.loadPosts { _ in
+            completion()
+        }        
     }
 }

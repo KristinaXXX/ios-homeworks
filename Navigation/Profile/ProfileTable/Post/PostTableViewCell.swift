@@ -11,7 +11,6 @@ import StorageService
 class PostTableViewCell: UITableViewCell {
     
     static let id = "PostTableViewCell"
-    private let model = SharedModel()
     private var post: Post?
     private var sharedPost: SharedPost?
     private var isSaved: Bool = false
@@ -130,7 +129,7 @@ class PostTableViewCell: UITableViewCell {
         postImage.image = UIImage(named: post.image)
         likesLabel.text = "Likes: \(post.likes)"
         viewsLabel.text = "Views: \(post.views)"
-        isSaved = model.isSaved(post: post)
+        isSaved = SharedService.shared.isSaved(post: post)
         likeImage.tintColor = isSaved ? .red : .black
         self.post = post
     }
@@ -138,7 +137,11 @@ class PostTableViewCell: UITableViewCell {
     func update(_ post: SharedPost) {
         authorLabel.text = post.author
         descriptionLabel.text = post.description_
-        postImage.image = UIImage(named: post.image ?? "")
+        if let postImageString = post.image {
+            postImage.image = UIImage(named: postImageString)
+        } else {
+            postImage.image = UIImage()
+        }
         likesLabel.text = "Likes: \(post.likes)"
         viewsLabel.text = "Views: \(post.views)"
         isSaved = true
@@ -147,19 +150,11 @@ class PostTableViewCell: UITableViewCell {
     }
     
     @objc func doubleTappedImage() {
-        if isSaved {
-            if let post = post {
-                model.deletePost(post: post)
-                update(post)
-            } 
-//                else if let sharedPost = sharedPost {
-//                model.deletePost(post: sharedPost)
-//                update(sharedPost)
-//            }
-        } else {
-            model.savePost(post: post!)
-            isSaved = true
-            update(post!)
+        if !isSaved {
+            SharedService.shared.savePost(post: post!) { [weak self] _ in
+                self?.isSaved = true
+                self?.update((self?.post!)!)
+            }
         }
     }
 }

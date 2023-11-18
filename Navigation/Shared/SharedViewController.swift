@@ -12,6 +12,22 @@ final class SharedViewController: UIViewController {
     
     private let viewModel: SharedViewModel
     
+    static var postsTableView: UITableView = {
+        let tableView = UITableView(frame: .zero)
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.register(PostTableViewCell.self, forCellReuseIdentifier: PostTableViewCell.id)
+        
+        return tableView
+    }()
+    
+    private lazy var filterBarButtonItem: UIBarButtonItem = {
+        return createTabButton(imageName: "plus.magnifyingglass", selector: #selector(filterBarButtonPressed(_:)))
+    }()
+    
+    private lazy var cancelFilterBarButtonItem: UIBarButtonItem = {
+        return createTabButton(imageName: "minus.magnifyingglass", selector: #selector(cancelFilterBarButtonPressed(_:)))
+    }()
+    
     init(viewModel: SharedViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -21,14 +37,6 @@ final class SharedViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    static var postsTableView: UITableView = {
-        let tableView = UITableView(frame: .zero)
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.register(PostTableViewCell.self, forCellReuseIdentifier: PostTableViewCell.id)
-        
-        return tableView
-    }()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         addSubviews()
@@ -37,14 +45,19 @@ final class SharedViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        viewModel.updatePosts()
         Self.postsTableView.reloadData()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        viewModel.cancelFilter {}
     }
     
     private func addSubviews() {
         view.addSubview(Self.postsTableView)
         view.backgroundColor = .white
         title = "Shared"
+        
+        navigationItem.rightBarButtonItems = [cancelFilterBarButtonItem, filterBarButtonItem]
     }
     
     func setupConstraints() {
@@ -61,6 +74,18 @@ final class SharedViewController: UIViewController {
     private func tuneTableView() {
         Self.postsTableView.dataSource = self
         Self.postsTableView.delegate = self
+    }
+    
+    @objc func filterBarButtonPressed(_ sender: UIButton) {
+        viewModel.setFilter {
+            Self.postsTableView.reloadData()
+        }
+    }
+    
+    @objc func cancelFilterBarButtonPressed(_ sender: UIButton) {
+        viewModel.cancelFilter {
+            Self.postsTableView.reloadData()
+        }
     }
 }
 
@@ -86,6 +111,14 @@ extension SharedViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: false)
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            viewModel.deletePost(selectRow: indexPath.row) { _ in
+                tableView.deleteRows(at: [indexPath], with: .fade)
+            }
+        }
     }
 
 }

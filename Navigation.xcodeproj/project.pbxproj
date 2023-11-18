@@ -52,7 +52,7 @@
 		619EAA3C2AFF3FF3007AECC0 /* SharedPostBase.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 619EAA3A2AFF3FF3007AECC0 /* SharedPostBase.xcdatamodeld */; };
 		619EAA3E2AFF5001007AECC0 /* SharedCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619EAA3D2AFF5001007AECC0 /* SharedCoordinator.swift */; };
 		619EAA412AFF50D8007AECC0 /* SharedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619EAA402AFF50D8007AECC0 /* SharedViewModel.swift */; };
-		619EAA432AFF5150007AECC0 /* SharedModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619EAA422AFF5150007AECC0 /* SharedModel.swift */; };
+		619EAA432AFF5150007AECC0 /* SharedService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619EAA422AFF5150007AECC0 /* SharedService.swift */; };
 		619EAA452AFF51FD007AECC0 /* SharedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619EAA442AFF51FD007AECC0 /* SharedViewController.swift */; };
 		619EAA482AFF6497007AECC0 /* CoreDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619EAA472AFF6497007AECC0 /* CoreDataService.swift */; };
 		61EAE6FE2A8D136A004DBCF8 /* Checker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61EAE6FD2A8D136A004DBCF8 /* Checker.swift */; };
@@ -128,7 +128,7 @@
 		619EAA3B2AFF3FF3007AECC0 /* SharedPostBase.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SharedPostBase.xcdatamodel; sourceTree = "<group>"; };
 		619EAA3D2AFF5001007AECC0 /* SharedCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedCoordinator.swift; sourceTree = "<group>"; };
 		619EAA402AFF50D8007AECC0 /* SharedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedViewModel.swift; sourceTree = "<group>"; };
-		619EAA422AFF5150007AECC0 /* SharedModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedModel.swift; sourceTree = "<group>"; };
+		619EAA422AFF5150007AECC0 /* SharedService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedService.swift; sourceTree = "<group>"; };
 		619EAA442AFF51FD007AECC0 /* SharedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedViewController.swift; sourceTree = "<group>"; };
 		619EAA472AFF6497007AECC0 /* CoreDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataService.swift; sourceTree = "<group>"; };
 		61EAE6FD2A8D136A004DBCF8 /* Checker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Checker.swift; sourceTree = "<group>"; };
@@ -297,7 +297,7 @@
 			isa = PBXGroup;
 			children = (
 				619EAA402AFF50D8007AECC0 /* SharedViewModel.swift */,
-				619EAA422AFF5150007AECC0 /* SharedModel.swift */,
+				619EAA422AFF5150007AECC0 /* SharedService.swift */,
 				619EAA442AFF51FD007AECC0 /* SharedViewController.swift */,
 			);
 			path = Shared;
@@ -481,7 +481,7 @@
 				610D2F432AB9BBCB0002DECC /* ProfileViewModel.swift in Sources */,
 				610D2F4B2AC089B40002DECC /* BruteForceModel.swift in Sources */,
 				61F130422A30A96200E27506 /* ProfileHeaderView.swift in Sources */,
-				619EAA432AFF5150007AECC0 /* SharedModel.swift in Sources */,
+				619EAA432AFF5150007AECC0 /* SharedService.swift in Sources */,
 				610D2F3B2AB9A32F0002DECC /* FeedCoordinator.swift in Sources */,
 				610BE1D32A2B54FE005E7CD1 /* InfoViewController.swift in Sources */,
 				610BE1B92A265BCB005E7CD1 /* SceneDelegate.swift in Sources */,
