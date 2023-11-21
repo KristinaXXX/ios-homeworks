@@ -151,10 +151,9 @@ class PostTableViewCell: UITableViewCell {
     
     @objc func doubleTappedImage() {
         if !isSaved {
-            SharedService.shared.savePost(post: post!) { [weak self] _ in
-                self?.isSaved = true
-                self?.update((self?.post!)!)
-            }
+            SharedService.shared.savePost(post: post!)
+            isSaved.toggle()
+            likeImage.tintColor = isSaved ? .red : .black
         }
     }
 }

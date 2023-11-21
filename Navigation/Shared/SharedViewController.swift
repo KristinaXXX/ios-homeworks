@@ -5,12 +5,14 @@
 //  Created by Kr Qqq on 11.11.2023.
 //
 
+import CoreData
 import Foundation
 import UIKit
 
 final class SharedViewController: UIViewController {
     
     private let viewModel: SharedViewModel
+    private let sharedService = SharedService.shared
     
     static var postsTableView: UITableView = {
         let tableView = UITableView(frame: .zero)
@@ -28,6 +30,19 @@ final class SharedViewController: UIViewController {
         return createTabButton(imageName: "minus.magnifyingglass", selector: #selector(cancelFilterBarButtonPressed(_:)))
     }()
     
+    private lazy var fetchResultController: NSFetchedResultsController<SharedPost> = {
+        let request = SharedPost.fetchRequest()
+        
+        request.sortDescriptors = [NSSortDescriptor(key: "author", ascending: false)]
+        let fetchResultsController = NSFetchedResultsController(
+            fetchRequest: request,
+            managedObjectContext: sharedService.backgroundContext,
+            sectionNameKeyPath: nil,
+            cacheName: nil)
+        fetchResultsController.delegate = self
+        return fetchResultsController
+    }()
+    
     init(viewModel: SharedViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -42,14 +57,11 @@ final class SharedViewController: UIViewController {
         addSubviews()
         setupConstraints()
         tuneTableView()
+        initialFetch()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        Self.postsTableView.reloadData()
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        viewModel.cancelFilter {}
+    private func initialFetch() {
+        try? fetchResultController.performFetch()
     }
     
     private func addSubviews() {
@@ -77,22 +89,29 @@ final class SharedViewController: UIViewController {
     }
     
     @objc func filterBarButtonPressed(_ sender: UIButton) {
-        viewModel.setFilter {
+        let alert = UIAlertController(title: "Search by author", message: nil, preferredStyle: .alert)
+        alert.addTextField()
+        alert.textFields![0].placeholder = "Author"
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        alert.addAction(UIAlertAction(title: "ОК", style: .default, handler: { [weak self] _ in
+            self?.fetchResultController.fetchRequest.predicate = NSPredicate(format: "author CONTAINS %@", alert.textFields![0].text ?? "")
+            self?.initialFetch()
             Self.postsTableView.reloadData()
-        }
+        }))
+        navigationController?.present(alert, animated: true)
     }
     
     @objc func cancelFilterBarButtonPressed(_ sender: UIButton) {
-        viewModel.cancelFilter {
-            Self.postsTableView.reloadData()
-        }
+        fetchResultController.fetchRequest.predicate = nil
+        initialFetch()
+        Self.postsTableView.reloadData()
     }
 }
 
 extension SharedViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        viewModel.postCount()
+        fetchResultController.sections?[section].numberOfObjects ?? 0
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -105,7 +124,7 @@ extension SharedViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: PostTableViewCell.id, for: indexPath) as! PostTableViewCell
-        cell.update(viewModel.selectPost(selectRow: indexPath.row))
+        cell.update(fetchResultController.object(at: indexPath))
         return cell
     }
     
@@ -115,10 +134,32 @@ extension SharedViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            viewModel.deletePost(selectRow: indexPath.row) { _ in
-                tableView.deleteRows(at: [indexPath], with: .fade)
+            sharedService.deletePost(post: fetchResultController.object(at: indexPath))
+        }
+    }
+}
+
+extension SharedViewController: NSFetchedResultsControllerDelegate {
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+        
+        DispatchQueue.main.async {
+            switch type {
+            case .insert:
+                guard let newIndexPath else { return }
+                SharedViewController.postsTableView.insertRows(at: [newIndexPath], with: .automatic)
+            case .delete:
+                guard let indexPath else { return }
+                SharedViewController.postsTableView.deleteRows(at: [indexPath], with: .fade)
+            case .move:
+                guard let indexPath,
+                      let newIndexPath else { return }
+                SharedViewController.postsTableView.moveRow(at: indexPath, to: newIndexPath)
+            case .update:
+                guard let indexPath else { return }
+                SharedViewController.postsTableView.reloadRows(at: [indexPath], with: .automatic)
+            @unknown default:
+                break
             }
         }
     }
-
 }
