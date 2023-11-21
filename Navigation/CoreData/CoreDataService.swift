@@ -11,8 +11,8 @@ import CoreData
 import Foundation
 
 protocol ICoreDataService {
-    var context: NSManagedObjectContext { get }
-    func saveContext()
+    var mainContext: NSManagedObjectContext { get }
+    var backgroundContext: NSManagedObjectContext { get }
 }
 
 final class CoreDataService: ICoreDataService {
@@ -31,21 +31,18 @@ final class CoreDataService: ICoreDataService {
         }
         return container
     }()
-    
-    lazy var context: NSManagedObjectContext = {
-        return persistentContainer.viewContext
+
+    lazy var mainContext: NSManagedObjectContext = {
+        let context = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
+        context.persistentStoreCoordinator = persistentContainer.persistentStoreCoordinator
+        return context
     }()
     
-    func saveContext() {
-        if context.hasChanges {
-            do {
-                try context.save()
-            } catch {
-                print(error)
-                assertionFailure("Save error")
-            }
-        }
-    }
+    lazy var backgroundContext: NSManagedObjectContext = {
+        let context = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
+        context.persistentStoreCoordinator = persistentContainer.persistentStoreCoordinator
+        return context
+    }()
 }
 
 private extension String {
