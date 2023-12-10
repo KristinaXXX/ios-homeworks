@@ -48,7 +48,6 @@ final class FactoryTab {
         
         case .shared:
             let coordinator = SharedCoordinator()
-            //let model = SharedModel()
             let viewModel = SharedViewModel(coordinator: coordinator)
             let viewController = SharedViewController(viewModel: viewModel)
             viewController.tabBarItem = UITabBarItem(title: "Shared", image: UIImage(systemName: "square.and.arrow.down"), tag: 2)

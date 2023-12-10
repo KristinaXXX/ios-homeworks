@@ -14,36 +14,14 @@ final class SharedService {
     private let coreDataService: ICoreDataService = CoreDataService.shared
     static let shared: SharedService = SharedService()
     
-    private(set) var sharedPosts = [SharedPost]()
-    
-    init() {
-        loadPosts { [weak self] result in
-            self?.sharedPosts = result
-        }
+    var backgroundContext: NSManagedObjectContext {
+        return coreDataService.backgroundContext
     }
     
-    func loadPosts(completion: @escaping ([SharedPost]) -> Void) {
-
-        coreDataService.backgroundContext.perform { [weak self] in
-            guard let self else { return }
-            let request = SharedPost.fetchRequest()
-            
-            do {
-                sharedPosts = try coreDataService.backgroundContext.fetch(request).map { $0 }
-                coreDataService.mainContext.perform { [weak self] in
-                    guard let self else { return }
-                    completion(sharedPosts)
-                }
-            } catch {
-                print(error)
-                sharedPosts = []
-                completion(sharedPosts)
-            }
+    func savePost(post: Post) {
+        if isSaved(post: post) {
+            return
         }
-    }
-    
-    func savePost(post: Post, completion: @escaping ([SharedPost]) -> Void) {
-        
         coreDataService.backgroundContext.perform { [weak self] in
             guard let self else { return }
             
@@ -58,67 +36,33 @@ final class SharedService {
             if coreDataService.backgroundContext.hasChanges {
                 do {
                     try coreDataService.backgroundContext.save()
-                    coreDataService.mainContext.perform { [weak self] in
-                        guard let self else { return }
-                        sharedPosts.insert(newPost, at: 0)
-                        completion(sharedPosts)
-                    }
                 } catch {
-                    coreDataService.mainContext.perform { [weak self] in
-                        guard let self else { return }
-                        completion(sharedPosts)
-                    }
+                    print(error.localizedDescription)
                 }
             }
         }
     }
     
-    func deletePost(post: SharedPost, completion: @escaping ([SharedPost]) -> Void) {
-        
+    func deletePost(post: SharedPost) {
         coreDataService.backgroundContext.perform { [weak self] in
             guard let self else { return }
             coreDataService.backgroundContext.delete(post)
-             
             do {
                 try coreDataService.backgroundContext.save()
-                sharedPosts.removeAll(where: { $0.id == post.id })
-                coreDataService.mainContext.perform { [weak self] in
-                    guard let self else { return }
-                    completion(sharedPosts)
-                }
             } catch {
                 print(error)
-                coreDataService.mainContext.perform { [weak self] in
-                    guard let self else { return }
-                    completion(sharedPosts)
-                }
             }
         }
     }
     
-    func isSaved(post: Post) -> Bool {
-        let posts = sharedPosts.filter{ $0.id == post.id }
-        return !posts.isEmpty
-    } 
-    
-    func setFilter(value: String, completion: @escaping ([SharedPost]) -> Void) {
-        let predicate = NSPredicate(format: "author == %@", value)
-        coreDataService.backgroundContext.perform { [weak self] in
-            guard let self else { return }
-            let request = NSFetchRequest<SharedPost>(entityName: "SharedPost")
-            request.predicate = predicate
-            
-            do {
-                sharedPosts = try coreDataService.backgroundContext.fetch(request).map { $0 }
-                coreDataService.mainContext.perform { [weak self] in
-                    guard let self else { return }
-                    completion(sharedPosts)
-                }
-            } catch {
-                print(error)
-                sharedPosts = []
-                completion(sharedPosts)
-            }
+    func isSaved(post: Post) -> Bool {        
+        let request = SharedPost.fetchRequest()
+        let predicate = NSPredicate(format: "id == %@", post.id as CVarArg)
+        request.predicate = predicate
+        
+        if let sharedPost = try? coreDataService.backgroundContext.fetch(request).first {
+            return true
         }
+        return false
     }
 }
