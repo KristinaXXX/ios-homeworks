@@ -50,6 +50,23 @@ class LogInViewController: UIViewController {
         return stackView
     }()
     
+    private lazy var stackButtons: UIStackView = {
+        let stackView = UIStackView()
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.clipsToBounds = true
+        
+        stackView.axis = .vertical
+        stackView.distribution = .fillEqually
+        stackView.alignment = .fill
+        stackView.spacing = 16.0
+        
+        stackView.tintColor = .lightGray
+        
+        stackView.layer.cornerRadius = 10
+        
+        return stackView
+    }()
+    
     private lazy var logoImage: UIImageView = {
         let image = UIImageView(image: UIImage(named: "logoVk"))
         image.clipsToBounds = true
@@ -104,6 +121,7 @@ class LogInViewController: UIViewController {
     }()
     
     private lazy var logInButton = CustomButton(title: "Log In", buttonAction: ( { self.logInButtonPressed() } ))
+    private lazy var signUpButton = CustomButton(title: "Sign Up", buttonAction: ( { self.signUpButtonPressed() } ))
     private lazy var brutForceButton = CustomButton(title: "Brute force", buttonAction: ( { self.brutForceButtonPressed() } ))
     
     private lazy var activityIndicator: UIActivityIndicatorView = {
@@ -133,7 +151,8 @@ class LogInViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setupKeyboardObservers()
-        addTimer()
+        profileViewModel.signOut()
+        //addTimer()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -167,7 +186,7 @@ class LogInViewController: UIViewController {
     func addSubviews() {
         view.addSubview(scrollView)
         scrollView.addSubview(contentView)
-        setupConstraints()
+        //setupConstraints()
         setupContentOfScrollView()
     }
     
@@ -194,15 +213,16 @@ class LogInViewController: UIViewController {
  
         contentView.addSubview(logoImage)
         contentView.addSubview(stackUserData)
-        contentView.addSubview(logInButton)
-        contentView.addSubview(brutForceButton)
-        contentView.addSubview(activityIndicator)
+        contentView.addSubview(stackButtons)
         
         stackUserData.addArrangedSubview(loginTextField)
         stackUserData.addArrangedSubview(passwordTextField)
+        
+        stackButtons.addArrangedSubview(logInButton)
+        stackButtons.addArrangedSubview(signUpButton)
             
         NSLayoutConstraint.activate([
-            logoImage.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 120.0),
+            logoImage.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 100.0),
             logoImage.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
             logoImage.widthAnchor.constraint(equalToConstant: 100),
             logoImage.heightAnchor.constraint(equalToConstant: 100)
@@ -216,26 +236,13 @@ class LogInViewController: UIViewController {
         ])
         
         NSLayoutConstraint.activate([
-            logInButton.topAnchor.constraint(equalTo: stackUserData.bottomAnchor, constant: 16.0),
-            logInButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16.0),
-            logInButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16.0),
-            logInButton.heightAnchor.constraint(equalToConstant: 50)
-        ])
-        
-        NSLayoutConstraint.activate([
-            brutForceButton.topAnchor.constraint(equalTo: logInButton.bottomAnchor, constant: 16.0),
-            brutForceButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16.0),
-            brutForceButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16.0),
-            brutForceButton.heightAnchor.constraint(equalToConstant: 50)
-        ])
-        
-        NSLayoutConstraint.activate([
-            activityIndicator.centerXAnchor.constraint(equalTo: brutForceButton.centerXAnchor, constant: 60),
-            activityIndicator.centerYAnchor.constraint(equalTo: brutForceButton.centerYAnchor)
+            stackButtons.topAnchor.constraint(equalTo: stackUserData.bottomAnchor, constant: 16.0),
+            stackButtons.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16.0),
+            stackButtons.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16.0),
+            stackButtons.heightAnchor.constraint(equalToConstant: 100)
         ])
 
         contentView.subviews.last?.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
-        brutForceButton.isHidden = true
     }
     
     func addTimer() {
@@ -254,7 +261,10 @@ class LogInViewController: UIViewController {
     // MARK: - Selectors
     
     func logInButtonPressed() {
-        profileViewModel.checkLoginToProfile(userInfo: userInfo)
+        profileViewModel.logIn(userInfo: userInfo)
+    }
+    func signUpButtonPressed() {
+        profileViewModel.sighUp(userInfo: userInfo)
     }
     
     func brutForceButtonPressed() {

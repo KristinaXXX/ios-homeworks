@@ -44,14 +44,13 @@ class ProfileViewController: UIViewController {
         tuneTableView()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        Self.postsTableView.reloadData()
+    }
+    
     private func addSubviews() {
         view.addSubview(Self.postsTableView)
-        navigationController?.navigationBar.backgroundColor = .white
-        #if DEBUG
-        view.backgroundColor = .systemBrown
-        #else
         view.backgroundColor = .systemGray6
-        #endif
     }
     
     func setupConstraints() {
@@ -68,13 +67,7 @@ class ProfileViewController: UIViewController {
     private func tuneTableView() {
         Self.postsTableView.dataSource = self
         Self.postsTableView.delegate = self
-        Self.postsTableView.rowHeight = UITableView.automaticDimension
-
-        if #available(iOS 15.0, *) {
-            Self.postsTableView.sectionHeaderTopPadding = 0.0
-        }
     }
-
 }
 
 extension ProfileViewController: UITableViewDataSource {
@@ -93,7 +86,6 @@ extension ProfileViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return 2
     }
-
 }
 
 extension ProfileViewController: UITableViewDelegate {
@@ -114,7 +106,7 @@ extension ProfileViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return section == 0 ? 230 : 0
+        return section == 0 ? 220 : 0
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -134,8 +126,8 @@ extension ProfileViewController: UITableViewDelegate {
             tableView.deselectRow(at: indexPath, animated: false)
             navigationController?.pushViewController(PhotosViewController(), animated: true)
         default:
+            tableView.deselectRow(at: indexPath, animated: true)
             return
         }
     }
-
 }

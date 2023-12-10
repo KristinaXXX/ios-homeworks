@@ -1,4 +1,5 @@
 import UIKit
+import FirebaseCore
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -7,7 +8,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
-        true
+        FirebaseApp.configure()
+        return true
     }
 
     // MARK: - UISceneSession Lifecycle
@@ -21,5 +23,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             name: "Default Configuration",
             sessionRole: connectingSceneSession.role
         )
+    }
+    
+    func applicationWillTerminate(_ application: UIApplication) {
+        CheckerService.signOut()
     }
 }

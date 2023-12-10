@@ -11,6 +11,7 @@ final class FactoryTab {
     enum Flow {
         case feed
         case profile
+        case shared
     }
     
     private let flow: Flow
@@ -32,7 +33,8 @@ final class FactoryTab {
             feedCoordinator.navigationController = navigationController
             navigationController.tabBarItem.title = "Feed"
             navigationController.setViewControllers([feedViewController], animated: true)
-        case .profile:            
+       
+        case .profile:
             let profileCoordinator = ProfileCoordinator()
             let factory = MyLoginFactory()
             let profileViewModel = ProfileViewModel(coordinator: profileCoordinator)
@@ -43,6 +45,15 @@ final class FactoryTab {
             profileCoordinator.navigationController = navigationController
             navigationController.tabBarItem.title = "Profile"
             navigationController.setViewControllers([logInViewController], animated: true)
+        
+        case .shared:
+            let coordinator = SharedCoordinator()
+            let viewModel = SharedViewModel(coordinator: coordinator)
+            let viewController = SharedViewController(viewModel: viewModel)
+            viewController.tabBarItem = UITabBarItem(title: "Shared", image: UIImage(systemName: "square.and.arrow.down"), tag: 2)
+            coordinator.navigationController = navigationController
+            navigationController.tabBarItem.title = "Profile"
+            navigationController.setViewControllers([viewController], animated: true)
         }
     }
 }

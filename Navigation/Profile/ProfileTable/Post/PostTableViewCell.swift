@@ -11,12 +11,28 @@ import StorageService
 class PostTableViewCell: UITableViewCell {
     
     static let id = "PostTableViewCell"
+    private var post: Post?
+    private var sharedPost: SharedPost?
+    private var isSaved: Bool = false
 
     private lazy var postImage: UIImageView = {
         let image = UIImageView()
         image.translatesAutoresizingMaskIntoConstraints = false
-        image.contentMode = .scaleAspectFill
-        image.backgroundColor = .black
+        image.contentMode = .scaleAspectFit
+        image.backgroundColor = .white
+        image.isUserInteractionEnabled = true
+        let tap = UITapGestureRecognizer(target: self, action: #selector(doubleTappedImage))
+        tap.numberOfTapsRequired = 2
+        image.addGestureRecognizer(tap)
+        return image
+    }()
+    
+    private lazy var likeImage: UIImageView = {
+        let image = UIImageView()
+        image.image = UIImage(systemName: "heart.fill")
+        image.tintColor = .black
+        image.translatesAutoresizingMaskIntoConstraints = false
+        image.backgroundColor = .white
         return image
     }()
     
@@ -60,7 +76,6 @@ class PostTableViewCell: UITableViewCell {
         super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
         addSubviews()
         setupConstraints()
-        tuneView()
     }
     
     required init?(coder: NSCoder) {
@@ -69,56 +84,40 @@ class PostTableViewCell: UITableViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        
-        isHidden = false
-        isSelected = false
-        isHighlighted = false
     }
     
     // MARK: - Private
     
     private func addSubviews() {
-        addSubview(authorLabel)
-        addSubview(descriptionLabel)
-        addSubview(postImage)
-        addSubview(likesLabel)
-        addSubview(viewsLabel)
-    }
-    
-    private func tuneView() {
-        backgroundColor = .white
+        contentView.addSubviews(authorLabel, postImage, descriptionLabel, likeImage, likesLabel, viewsLabel)
+        self.selectionStyle = .default
     }
     
     func setupConstraints() {
         NSLayoutConstraint.activate([
-            authorLabel.topAnchor.constraint(equalTo: topAnchor, constant: 16),
-            authorLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            authorLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16)
-        ])
-       
-        NSLayoutConstraint.activate([
-            postImage.topAnchor.constraint(equalTo: authorLabel.bottomAnchor, constant: 16),
-            postImage.leadingAnchor.constraint(equalTo: leadingAnchor),
-            postImage.trailingAnchor.constraint(equalTo: trailingAnchor),
-            postImage.heightAnchor.constraint(equalTo: postImage.widthAnchor)
-        ])
-        
-        NSLayoutConstraint.activate([
-            descriptionLabel.topAnchor.constraint(equalTo: postImage.bottomAnchor, constant: 16),
-            descriptionLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-            descriptionLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16)
-        ])
+            authorLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: LayoutConstants.indent),
+            authorLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: LayoutConstants.leadingMargin),
+            authorLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: LayoutConstants.trailingMargin),
+
+            postImage.widthAnchor.constraint(equalTo: contentView.widthAnchor),
+            postImage.heightAnchor.constraint(equalToConstant: 250),
+            postImage.topAnchor.constraint(equalTo: authorLabel.bottomAnchor, constant: LayoutConstants.indent),
+
+            descriptionLabel.topAnchor.constraint(equalTo: postImage.bottomAnchor, constant: LayoutConstants.indent),
+            descriptionLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: LayoutConstants.leadingMargin),
+            descriptionLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: LayoutConstants.trailingMargin),
+
+            likeImage.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: LayoutConstants.indent),
+            likeImage.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: LayoutConstants.leadingMargin),
+            likeImage.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -LayoutConstants.indent),
             
-        NSLayoutConstraint.activate([
-            likesLabel.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 16),
-            likesLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            likesLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -16)
-        ])
-            
-        NSLayoutConstraint.activate([
-            viewsLabel.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 16),
-            viewsLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-            viewsLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -16)
+            likesLabel.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: LayoutConstants.indent),
+            likesLabel.leadingAnchor.constraint(equalTo: likeImage.trailingAnchor, constant: LayoutConstants.leadingMargin),
+            likesLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -LayoutConstants.indent),
+
+            viewsLabel.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: LayoutConstants.indent),
+            viewsLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: LayoutConstants.trailingMargin),
+            viewsLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -LayoutConstants.indent)
         ])
     }
     
@@ -130,6 +129,39 @@ class PostTableViewCell: UITableViewCell {
         postImage.image = UIImage(named: post.image)
         likesLabel.text = "Likes: \(post.likes)"
         viewsLabel.text = "Views: \(post.views)"
+        isSaved = SharedService.shared.isSaved(post: post)
+        likeImage.tintColor = isSaved ? .red : .black
+        self.post = post
     }
+    
+    func update(_ post: SharedPost) {
+        authorLabel.text = post.author
+        descriptionLabel.text = post.description_
+        if let postImageString = post.image {
+            postImage.image = UIImage(named: postImageString)
+        } else {
+            postImage.image = UIImage()
+        }
+        likesLabel.text = "Likes: \(post.likes)"
+        viewsLabel.text = "Views: \(post.views)"
+        isSaved = true
+        likeImage.tintColor = .red
+        sharedPost = post
+    }
+    
+    @objc func doubleTappedImage() {
+        if !isSaved {
+            SharedService.shared.savePost(post: post!)
+            isSaved.toggle()
+            likeImage.tintColor = isSaved ? .red : .black
+        }
+    }
+}
 
+public extension UIView {
+    func addSubviews(_ subviews: UIView...) {
+        for i in subviews {
+            self.addSubview(i)
+        }
+    }
 }

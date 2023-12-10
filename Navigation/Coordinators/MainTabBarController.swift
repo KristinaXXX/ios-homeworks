@@ -11,6 +11,7 @@ final class MainTabBarController: UITabBarController {
     
     private let feedVC = FactoryTab(flow: .feed)
     private let profileVC = FactoryTab(flow: .profile)
+    private let sharedVC = FactoryTab(flow: .shared)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,10 +22,12 @@ final class MainTabBarController: UITabBarController {
     private func setControllers() {
         viewControllers = [
             feedVC.navigationController,
-            profileVC.navigationController
+            profileVC.navigationController,
+            sharedVC.navigationController
         ]
         
-        selectedIndex = 0
+        selectedIndex = 1
         tabBar.backgroundColor = .systemGray6
+        tabBar.isHidden = true
     }
 }

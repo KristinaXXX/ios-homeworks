@@ -17,6 +17,6 @@ final class FeedModel {
     }
     
     public func takePost(text: String) -> Post {
-        Post(author: text)
+        Post(author: text, id: UUID())
     }
 }

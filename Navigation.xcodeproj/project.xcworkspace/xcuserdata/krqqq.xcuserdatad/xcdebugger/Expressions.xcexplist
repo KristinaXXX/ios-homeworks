@@ -3,6 +3,37 @@
    version = "1.0">
    <ContextStates>
       <ContextState
+         contextName = "closure #1 in SharedService.deletePost(post:completion:):SharedService.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "post">
+            </PersistentString>
+            <PersistentString
+               value = "posts">
+            </PersistentString>
+            <PersistentString
+               value = "sharePost.id">
+            </PersistentString>
+            <PersistentString
+               value = "sharedPosts[0]">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "closure #1 in static CheckerService.checkCredentials(email:password:completion:):CheckerService.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "errNS.code">
+            </PersistentString>
+            <PersistentString
+               value = "AuthErrorCode.internalError.rawValue">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "SharedViewModel.updatePosts() [inlined]:SharedViewModel.swift">
+      </ContextState>
+      <ContextState
          contextName = "ProfileCoordinator.showForgotLogin():ProfileCoordinator.swift">
          <PersistentStrings>
             <PersistentString
@@ -10,6 +41,39 @@
             </PersistentString>
             <PersistentString
                value = "navigationController?.presentedViewController">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "SharedService.isSaved(post:) [inlined]:SharedService.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "sharedPosts.count">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "closure #1 in InfoViewController.loadData():InfoViewController.swift">
+      </ContextState>
+      <ContextState
+         contextName = "specialized SharedViewController.viewWillAppear(_:):SharedViewController.swift">
+      </ContextState>
+      <ContextState
+         contextName = "SharedViewModel.postCount() [inlined]:SharedViewModel.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "SharedService.shared.sharedPosts.count">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "closure #1 in static NetworkService.requestJSONSerialization(url:completion:):NetworkService.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "json[&apos;title&apos;]">
+            </PersistentString>
+            <PersistentString
+               value = "json as? Todos">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
