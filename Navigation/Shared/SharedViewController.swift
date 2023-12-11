@@ -67,7 +67,7 @@ final class SharedViewController: UIViewController {
     private func addSubviews() {
         view.addSubview(Self.postsTableView)
         view.backgroundColor = .white
-        title = "Shared"
+        title = NSLocalizedString("Shared", comment: "")
         
         navigationItem.rightBarButtonItems = [cancelFilterBarButtonItem, filterBarButtonItem]
     }
@@ -89,11 +89,11 @@ final class SharedViewController: UIViewController {
     }
     
     @objc func filterBarButtonPressed(_ sender: UIButton) {
-        let alert = UIAlertController(title: "Search by author", message: nil, preferredStyle: .alert)
+        let alert = UIAlertController(title: NSLocalizedString("Search by author", comment: ""), message: nil, preferredStyle: .alert)
         alert.addTextField()
-        alert.textFields![0].placeholder = "Author"
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
-        alert.addAction(UIAlertAction(title: "ОК", style: .default, handler: { [weak self] _ in
+        alert.textFields![0].placeholder = NSLocalizedString("Author", comment: "")
+        alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel))
+        alert.addAction(UIAlertAction(title: NSLocalizedString("ОК", comment: ""), style: .default, handler: { [weak self] _ in
             self?.fetchResultController.fetchRequest.predicate = NSPredicate(format: "author CONTAINS %@", alert.textFields![0].text ?? "")
             self?.initialFetch()
             Self.postsTableView.reloadData()

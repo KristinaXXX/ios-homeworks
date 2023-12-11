@@ -83,7 +83,7 @@ class LogInViewController: UIViewController {
         textField.autocapitalizationType = .none
         textField.leftView = UIView(frame: CGRect(x: view.frame.minX, y: view.frame.minY, width: 12.0, height: view.frame.height))
         textField.leftViewMode = .always
-        textField.placeholder = "Email or phone (Ivan)"
+        textField.placeholder = NSLocalizedString("Email or phone (Ivan)", comment: "")
         textField.returnKeyType = UIReturnKeyType.done
         textField.clearButtonMode = UITextField.ViewMode.whileEditing
         textField.contentVerticalAlignment = UIControl.ContentVerticalAlignment.center
@@ -107,7 +107,7 @@ class LogInViewController: UIViewController {
         textField.autocapitalizationType = .none
         textField.leftView = UIView(frame: CGRect(x: view.frame.minX, y: view.frame.minY, width: 12.0, height: view.frame.height))
         textField.leftViewMode = .always
-        textField.placeholder = "Password"
+        textField.placeholder = NSLocalizedString("Password", comment: "")
         textField.isSecureTextEntry = true
         textField.returnKeyType = UIReturnKeyType.done
         textField.clearButtonMode = UITextField.ViewMode.whileEditing
@@ -120,9 +120,9 @@ class LogInViewController: UIViewController {
         return textField
     }()
     
-    private lazy var logInButton = CustomButton(title: "Log In", buttonAction: ( { self.logInButtonPressed() } ))
-    private lazy var signUpButton = CustomButton(title: "Sign Up", buttonAction: ( { self.signUpButtonPressed() } ))
-    private lazy var brutForceButton = CustomButton(title: "Brute force", buttonAction: ( { self.brutForceButtonPressed() } ))
+    private lazy var logInButton = CustomButton(title: NSLocalizedString("Log In", comment: ""), buttonAction: ( { self.logInButtonPressed() } ))
+    private lazy var signUpButton = CustomButton(title: NSLocalizedString("Sign Up", comment: ""), buttonAction: ( { self.signUpButtonPressed() } ))
+    private lazy var brutForceButton = CustomButton(title: NSLocalizedString("Brute force", comment: ""), buttonAction: ( { self.brutForceButtonPressed() } ))
     
     private lazy var activityIndicator: UIActivityIndicatorView = {
         let activity = UIActivityIndicatorView()

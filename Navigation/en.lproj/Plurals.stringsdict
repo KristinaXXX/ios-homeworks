@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>numberOfViews</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@views@</string>
+		<key>views</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%d view</string>
+			<key>zero</key>
+			<string>No views</string>
+			<key>other</key>
+			<string>%d views</string>
+		</dict>
+	</dict>
+	<key>numberOfLikes</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@likes@</string>
+		<key>likes</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%d like</string>
+			<key>zero</key>
+			<string>No likes</string>
+			<key>other</key>
+			<string>%d likes</string>
+		</dict>
+	</dict>
+</dict>
+</plist>

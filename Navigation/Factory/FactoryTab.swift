@@ -29,7 +29,7 @@ final class FactoryTab {
             let feedModel = FeedModel()
             let feedViewModel = FeedViewModel(feedModel: feedModel, coordinator: feedCoordinator)
             let feedViewController = FeedViewController(feedViewModel: feedViewModel)
-            feedViewController.tabBarItem = UITabBarItem(title: "Feed", image: UIImage(systemName: "rectangle.stack.fill"), tag: 0)
+            feedViewController.tabBarItem = UITabBarItem(title: NSLocalizedString("Feed", comment: ""), image: UIImage(systemName: "rectangle.stack.fill"), tag: 0)
             feedCoordinator.navigationController = navigationController
             navigationController.tabBarItem.title = "Feed"
             navigationController.setViewControllers([feedViewController], animated: true)
@@ -40,7 +40,7 @@ final class FactoryTab {
             let profileViewModel = ProfileViewModel(coordinator: profileCoordinator)
             profileViewModel.loginDelegate = factory.makeLoginInspector()
             let logInViewController = LogInViewController(profileViewModel: profileViewModel)
-            logInViewController.tabBarItem = UITabBarItem(title: "Profile", image: UIImage(systemName: "person.fill"), tag: 1)
+            logInViewController.tabBarItem = UITabBarItem(title: NSLocalizedString("Profile", comment: ""), image: UIImage(systemName: "person.fill"), tag: 1)
 
             profileCoordinator.navigationController = navigationController
             navigationController.tabBarItem.title = "Profile"
@@ -50,7 +50,7 @@ final class FactoryTab {
             let coordinator = SharedCoordinator()
             let viewModel = SharedViewModel(coordinator: coordinator)
             let viewController = SharedViewController(viewModel: viewModel)
-            viewController.tabBarItem = UITabBarItem(title: "Shared", image: UIImage(systemName: "square.and.arrow.down"), tag: 2)
+            viewController.tabBarItem = UITabBarItem(title: NSLocalizedString("Shared", comment: ""), image: UIImage(systemName: "square.and.arrow.down"), tag: 2)
             coordinator.navigationController = navigationController
             navigationController.tabBarItem.title = "Profile"
             navigationController.setViewControllers([viewController], animated: true)

@@ -127,8 +127,8 @@ class PostTableViewCell: UITableViewCell {
         authorLabel.text = post.author
         descriptionLabel.text = post.description
         postImage.image = UIImage(named: post.image)
-        likesLabel.text = "Likes: \(post.likes)"
-        viewsLabel.text = "Views: \(post.views)"
+        likesLabel.text = post.likes.numberOfLikes
+        viewsLabel.text = post.views.numberOfViews
         isSaved = SharedService.shared.isSaved(post: post)
         likeImage.tintColor = isSaved ? .red : .black
         self.post = post
@@ -142,8 +142,8 @@ class PostTableViewCell: UITableViewCell {
         } else {
             postImage.image = UIImage()
         }
-        likesLabel.text = "Likes: \(post.likes)"
-        viewsLabel.text = "Views: \(post.views)"
+        likesLabel.text = post.likes.numberOfLikes
+        viewsLabel.text = post.views.numberOfViews
         isSaved = true
         likeImage.tintColor = .red
         sharedPost = post
