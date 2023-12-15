@@ -19,7 +19,7 @@ final class ProfileCoordinator: ProfileCoordinatorProtocol {
 
     func showFailLogin(text: String) {
         let alert = UIAlertController(title: "Fail", message: text, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default))
+        alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .default))
         navigationController?.present(alert, animated: true, completion: nil)
     }
     

@@ -29,8 +29,8 @@ final class SharedService {
             newPost.author = post.author
             newPost.description_ = post.description
             newPost.image = post.image
-            newPost.likes = Int16(post.likes)
-            newPost.views = Int16(post.views)
+            newPost.likes = post.likes
+            newPost.views = post.views
             newPost.id = post.id
             
             if coreDataService.backgroundContext.hasChanges {
@@ -60,7 +60,7 @@ final class SharedService {
         let predicate = NSPredicate(format: "id == %@", post.id as CVarArg)
         request.predicate = predicate
         
-        if let sharedPost = try? coreDataService.backgroundContext.fetch(request).first {
+        if let _ = try? coreDataService.backgroundContext.fetch(request).first {
             return true
         }
         return false

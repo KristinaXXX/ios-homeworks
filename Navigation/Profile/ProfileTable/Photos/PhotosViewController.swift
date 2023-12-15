@@ -54,14 +54,14 @@ class PhotosViewController: UIViewController {
                 var errorText = ""
                 switch error {
                 case .notFound:
-                    errorText = "Resource is not found"
+                    errorText = NSLocalizedString("Resource is not found", comment: "")
                 case .forbidden:
-                    errorText = "Forbidden"
+                    errorText = NSLocalizedString("Forbidden", comment: "")
                 case .badRequest:
-                    errorText = "Bad request"
+                    errorText = NSLocalizedString("Bad request", comment: "")
                 }
-                let alert = UIAlertController(title: "Load error", message: errorText, preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "OK", style: .default))
+                let alert = UIAlertController(title: NSLocalizedString("Load error", comment: ""), message: errorText, preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .default))
                 self?.navigationController?.present(alert, animated: true, completion: nil)
             }
         })
@@ -74,7 +74,7 @@ class PhotosViewController: UIViewController {
     
     private func tuneView() {
         view.backgroundColor = .systemBackground
-        title = "Photo Gallery"
+        title = NSLocalizedString("Photo Gallery", comment: "")
         
         photoCollection.dataSource = self
         photoCollection.delegate = self

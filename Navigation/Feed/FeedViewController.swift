@@ -13,7 +13,7 @@ class FeedViewController: UIViewController {
     // MARK: - Custom elements
     private lazy var showPost1 = CustomButton(title: "Post #1", buttonAction: ( { self.showPost("Post #1") } ))
     private lazy var showPost2 = CustomButton(title: "Post #2", buttonAction: ( { self.showPost("Post #2") } ))
-    private lazy var checkGuessButton = CustomButton(title: "Check word", buttonAction: ( { self.checkWord()} ))
+    private lazy var checkGuessButton = CustomButton(title: NSLocalizedString("Check word", comment: ""), buttonAction: ( { self.checkWord()} ))
     
     private let feedViewModel: FeedViewModel
     
@@ -25,7 +25,7 @@ class FeedViewController: UIViewController {
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.leftView = UIView(frame: CGRect(x: view.frame.minX, y: view.frame.minY, width: 12.0, height: view.frame.height))
         textField.leftViewMode = .always
-        textField.placeholder = "Secret word"
+        textField.placeholder = NSLocalizedString("Secret word", comment: "")
         textField.clearButtonMode = UITextField.ViewMode.whileEditing
         textField.layer.cornerRadius = 10
         textField.layer.borderWidth = 0.5

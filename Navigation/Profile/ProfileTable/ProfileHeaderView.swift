@@ -11,7 +11,7 @@ import Foundation
 class ProfileHeaderView: UITableViewHeaderFooterView {
 
     static let id = "ProfileHeaderView"
-    private var statusText: String = "Waiting for something..."
+    private var statusText: String = NSLocalizedString("Waiting for something...", comment: "")
     private var profileImagePoint = CGPoint()
     
     // MARK: - Custom elements
@@ -49,7 +49,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
         return label
     }()
     
-    private lazy var showButton = CustomButton(title: "Set status", buttonAction: ( { self.buttonPressed() } ))
+    private lazy var showButton = CustomButton(title: NSLocalizedString("Set status", comment: ""), buttonAction: ( { self.buttonPressed() } ))
     
     private lazy var statusTextField: UITextField = {
         let textField = UITextField()
@@ -63,7 +63,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
         textField.addTarget(self, action: #selector(statusTextChanged(_:)), for: .editingChanged)
         textField.leftView = UIView(frame: CGRect(x: self.frame.minX, y: self.frame.minY, width: 12.0, height: self.frame.height))
         textField.leftViewMode = .always
-        textField.placeholder = "Set your status.."
+        textField.placeholder = NSLocalizedString("Set your status..", comment: "")
         
         textField.returnKeyType = UIReturnKeyType.done
         textField.clearButtonMode = UITextField.ViewMode.whileEditing

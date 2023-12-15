@@ -24,7 +24,7 @@ final class FeedCoordinator: FeedCoordinatorProtocol {
     }
     
     func showCheckResult(result: Bool) {
-        let alert = UIAlertController(title: "Check word", message: result ? "Right!" : "False! Try to enter 'word'", preferredStyle: .alert)
+        let alert = UIAlertController(title: NSLocalizedString("Check word", comment: ""), message: result ? NSLocalizedString("Right!", comment: "") : NSLocalizedString("False! Try to enter 'word'", comment: ""), preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .default))
         navigationController?.present(alert, animated: true, completion: nil)
     }
