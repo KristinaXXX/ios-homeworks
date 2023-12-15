@@ -102,17 +102,6 @@
         }
       }
     },
-    "Likes" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Лайков"
-          }
-        }
-      }
-    },
     "Load error" : {
       "localizations" : {
         "ru" : {
@@ -270,17 +259,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Зарегистрироваться"
-          }
-        }
-      }
-    },
-    "Views" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Просмотров"
           }
         }
       }

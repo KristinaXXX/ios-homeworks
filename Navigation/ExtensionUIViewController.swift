@@ -23,3 +23,14 @@ extension UIViewController {
         
     }
 }
+
+extension UIColor {
+    static func defaultColor(lightMode: UIColor, darkMode: UIColor) -> UIColor {
+        guard #available(iOS 13.0, *) else {
+            return lightMode
+        }
+        return UIColor { (traitCollection) -> UIColor in
+            return traitCollection.userInterfaceStyle == .light ? lightMode : darkMode
+        }
+    }
+}

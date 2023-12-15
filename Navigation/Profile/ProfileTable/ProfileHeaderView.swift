@@ -21,7 +21,6 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
         image.layer.cornerRadius = 55.0
         image.clipsToBounds = true
         image.layer.borderWidth = 3
-        image.layer.borderColor = UIColor.white.cgColor
         image.translatesAutoresizingMaskIntoConstraints = false
         image.contentMode = .scaleAspectFill
         
@@ -34,7 +33,6 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
     private lazy var fullNameLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 18, weight: .bold)
-        label.textColor = .black
         label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -43,7 +41,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
     private lazy var statusLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 14, weight: .regular)
-        label.textColor = .gray
+        label.textColor = .systemGray
         label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -54,11 +52,8 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
     private lazy var statusTextField: UITextField = {
         let textField = UITextField()
         textField.font = UIFont.systemFont(ofSize: 15, weight: .regular)
-        textField.textColor = .black
-        textField.backgroundColor = .white
         textField.layer.cornerRadius = 12
         textField.layer.borderWidth = 1
-        textField.layer.borderColor = UIColor.black.cgColor
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.addTarget(self, action: #selector(statusTextChanged(_:)), for: .editingChanged)
         textField.leftView = UIView(frame: CGRect(x: self.frame.minX, y: self.frame.minY, width: 12.0, height: self.frame.height))
@@ -79,7 +74,6 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
         button.backgroundColor = .clear
         button.contentMode = .scaleToFill
         button.setImage(UIImage(systemName: "xmark"), for: .normal)
-        button.tintColor = .black
         button.addTarget(self, action: #selector(closeProfileImage), for: .touchUpInside)
         
         return button
@@ -87,7 +81,6 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
     
     private lazy var profileBackgroundView: UIView = {
         let view = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
-        view.backgroundColor = .systemGray6
         view.isHidden = true
         view.alpha = 0
         return view
@@ -99,6 +92,20 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
         super.init(reuseIdentifier: reuseIdentifier)
         addSubviews()
         setupConstraint()
+        updateColors()
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        updateColors()
+    }
+    
+    private func updateColors() {
+        profileImage.layer.borderColor = UIColor.defaultColor(lightMode: .white, darkMode: .black).cgColor
+        fullNameLabel.textColor = .defaultColor(lightMode: .black, darkMode: .white)
+        statusTextField.textColor = .defaultColor(lightMode: .black, darkMode: .white)
+        statusTextField.backgroundColor = .defaultColor(lightMode: .white, darkMode: .black)
+        statusTextField.layer.borderColor = UIColor.defaultColor(lightMode: .black, darkMode: .white).cgColor
+        closeProfileImageButton.tintColor = .defaultColor(lightMode: .black, darkMode: .white)
     }
     
     required init?(coder: NSCoder) {
@@ -141,7 +148,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
            
         NSLayoutConstraint.activate([
             showButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16.0),
-            showButton.topAnchor.constraint(equalTo: profileImage.bottomAnchor, constant: 25.0), //40
+            showButton.topAnchor.constraint(equalTo: profileImage.bottomAnchor, constant: 25.0),
             showButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16.0),
             showButton.heightAnchor.constraint(equalToConstant: 50.0)
         ])

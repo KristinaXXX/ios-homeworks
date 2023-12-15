@@ -19,7 +19,6 @@ class PostTableViewCell: UITableViewCell {
         let image = UIImageView()
         image.translatesAutoresizingMaskIntoConstraints = false
         image.contentMode = .scaleAspectFit
-        image.backgroundColor = .white
         image.isUserInteractionEnabled = true
         let tap = UITapGestureRecognizer(target: self, action: #selector(doubleTappedImage))
         tap.numberOfTapsRequired = 2
@@ -30,16 +29,13 @@ class PostTableViewCell: UITableViewCell {
     private lazy var likeImage: UIImageView = {
         let image = UIImageView()
         image.image = UIImage(systemName: "heart.fill")
-        image.tintColor = .black
         image.translatesAutoresizingMaskIntoConstraints = false
-        image.backgroundColor = .white
         return image
     }()
     
     private lazy var authorLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
-        label.textColor = .black
         label.numberOfLines = 2
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -57,7 +53,6 @@ class PostTableViewCell: UITableViewCell {
     private lazy var likesLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 16, weight: .regular)
-        label.textColor = .black
         label.numberOfLines = 1
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -66,7 +61,6 @@ class PostTableViewCell: UITableViewCell {
     private lazy var viewsLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 16, weight: .regular)
-        label.textColor = .black
         label.numberOfLines = 1
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -76,6 +70,7 @@ class PostTableViewCell: UITableViewCell {
         super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
         addSubviews()
         setupConstraints()
+        updateColors()
     }
     
     required init?(coder: NSCoder) {
@@ -84,6 +79,19 @@ class PostTableViewCell: UITableViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        updateColors()
+    }
+    
+    private func updateColors() {
+        backgroundColor = .defaultColor(lightMode: .white, darkMode: .black)
+        postImage.backgroundColor = .defaultColor(lightMode: .white, darkMode: .black)
+        authorLabel.textColor = .defaultColor(lightMode: .black, darkMode: .white)
+        likeImage.backgroundColor = .defaultColor(lightMode: .white, darkMode: .black)
+        likesLabel.textColor = .defaultColor(lightMode: .black, darkMode: .white)
+        viewsLabel.textColor = .defaultColor(lightMode: .black, darkMode: .white)
     }
     
     // MARK: - Private

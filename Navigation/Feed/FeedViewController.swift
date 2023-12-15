@@ -68,6 +68,18 @@ class FeedViewController: UIViewController {
         setupConstraints()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        updateColors()
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        updateColors()
+    }
+    
+    private func updateColors() {
+        view.backgroundColor = .defaultColor(lightMode: .white, darkMode: .black)
+    }
+    
     private func addSubviews() {
         view.addSubview(stackFeeds)
     }

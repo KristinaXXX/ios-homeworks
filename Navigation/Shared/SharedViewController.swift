@@ -60,13 +60,25 @@ final class SharedViewController: UIViewController {
         initialFetch()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        updateColors()
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        updateColors()
+    }
+    
+    private func updateColors() {
+        view.backgroundColor = .defaultColor(lightMode: .white, darkMode: .black)
+    }
+    
     private func initialFetch() {
         try? fetchResultController.performFetch()
     }
     
     private func addSubviews() {
         view.addSubview(Self.postsTableView)
-        view.backgroundColor = .white
+        //view.backgroundColor = .white
         title = NSLocalizedString("Shared", comment: "")
         
         navigationItem.rightBarButtonItems = [cancelFilterBarButtonItem, filterBarButtonItem]
