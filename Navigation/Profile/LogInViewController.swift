@@ -77,7 +77,6 @@ class LogInViewController: UIViewController {
     private lazy var loginTextField: UITextField = { [unowned self] in
         let textField = UITextField()
         textField.font = UIFont.systemFont(ofSize: 16, weight: .regular)
-        textField.textColor = .black
         textField.backgroundColor = .systemGray6
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.autocapitalizationType = .none
@@ -95,13 +94,16 @@ class LogInViewController: UIViewController {
         textField.layer.borderColor = UIColor.lightGray.cgColor
         
         textField.addTarget(self, action: #selector(loginTextChanged(_:)), for: .editingChanged)
+        
+        let gr = UITapGestureRecognizer(target: self, action: #selector(loginTextFull(_:)))
+        gr.numberOfTapsRequired = 2
+        textField.addGestureRecognizer(gr)
         return textField
     }()
     
     private lazy var passwordTextField: UITextField = {
         let textField = UITextField()
         textField.font = UIFont.systemFont(ofSize: 16, weight: .regular)
-        textField.textColor = .black
         textField.backgroundColor = .systemGray6
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.autocapitalizationType = .none
@@ -164,6 +166,20 @@ class LogInViewController: UIViewController {
         }
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        updateColors()
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        updateColors()
+    }
+    
+    private func updateColors() {
+        view.backgroundColor = .defaultColor(lightMode: .white, darkMode: .black)
+        loginTextField.textColor = .defaultColor(lightMode: .black, darkMode: .white)
+        passwordTextField.textColor = .defaultColor(lightMode: .black, darkMode: .white)
+    }
+    
     // MARK: - Actions
     
     @objc func willShowKeyboard(_ notification: NSNotification) {
@@ -179,18 +195,16 @@ class LogInViewController: UIViewController {
     }
     
     private func setupView() {
-        view.backgroundColor = .white
         navigationController?.navigationBar.isHidden = true
     }
     
-    func addSubviews() {
+    private func addSubviews() {
         view.addSubview(scrollView)
         scrollView.addSubview(contentView)
-        //setupConstraints()
         setupContentOfScrollView()
     }
     
-    func setupConstraints() {
+    private func setupConstraints() {
         
         let safeAreaLayoutGuide = view.safeAreaLayoutGuide
         NSLayoutConstraint.activate([
@@ -296,6 +310,13 @@ class LogInViewController: UIViewController {
     
     @objc func loginTextChanged(_ textField: UITextField) {
         userInfo.login = textField.text ?? ""
+    }
+    
+    @objc func loginTextFull(_ gr: UIGestureRecognizer) {
+        loginTextField.text = "test@mail.ru"
+        userInfo.login = loginTextField.text ?? ""
+        passwordTextField.text = "123456"
+        userInfo.password = passwordTextField.text ?? ""
     }
     
     @objc func passwordTextChanged(_ textField: UITextField) {

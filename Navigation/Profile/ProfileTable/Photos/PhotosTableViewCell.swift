@@ -14,7 +14,6 @@ class PhotosTableViewCell: UITableViewCell {
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 24, weight: .bold)
-        label.textColor = .black
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = NSLocalizedString("Photos", comment: "")
         return label
@@ -23,7 +22,7 @@ class PhotosTableViewCell: UITableViewCell {
     private lazy var arrowImage: UIImageView = {
         let arrow = UIImageView()
         arrow.translatesAutoresizingMaskIntoConstraints = false
-        arrow.image = UIImage(systemName: "arrow.right")?.withTintColor(.black, renderingMode: .alwaysOriginal)
+        arrow.image = UIImage(systemName: "arrow.right")?.withTintColor(.systemGray6, renderingMode: .alwaysOriginal)
         return arrow
     }()
     
@@ -60,7 +59,7 @@ class PhotosTableViewCell: UITableViewCell {
         super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
         addSubviews()
         setupConstraints()
-        tuneView()
+        updateColors()
     }
     
     required init?(coder: NSCoder) {
@@ -75,16 +74,21 @@ class PhotosTableViewCell: UITableViewCell {
         isHighlighted = false
     }
     
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        updateColors()
+    }
+    
+    private func updateColors() {
+        backgroundColor = .defaultColor(lightMode: .white, darkMode: .black)
+        titleLabel.textColor = .defaultColor(lightMode: .black, darkMode: .white)
+    }
+    
     // MARK: - Private
     
     private func addSubviews() {
         addSubview(stackPhotos)
         addSubview(arrowImage)
         addSubview(titleLabel)
-    }
-    
-    private func tuneView() {
-        backgroundColor = .white
     }
     
     func setupConstraints() {

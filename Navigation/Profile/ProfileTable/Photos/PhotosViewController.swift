@@ -28,7 +28,6 @@ class PhotosViewController: UIViewController {
             collectionViewLayout: viewLayout
         )
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.backgroundColor = .white
         
         collectionView.register(PhotosCollectionViewCell.self, forCellWithReuseIdentifier: PhotosCollectionViewCell.id)
         
@@ -42,6 +41,18 @@ class PhotosViewController: UIViewController {
         addSubviews()
         setupConstraints()
         tuneView()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        updateColors()
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        updateColors()
+    }
+    
+    private func updateColors() {
+        photoCollection.backgroundColor = .defaultColor(lightMode: .white, darkMode: .black)
     }
     
     private func loadData() {

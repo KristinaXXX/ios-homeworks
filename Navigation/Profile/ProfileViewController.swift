@@ -51,6 +51,7 @@ class ProfileViewController: UIViewController {
     private func addSubviews() {
         view.addSubview(Self.postsTableView)
         view.backgroundColor = .systemGray6
+        Self.postsTableView.backgroundColor = .systemGray6
     }
     
     func setupConstraints() {
