@@ -34,6 +34,14 @@
          contextName = "SharedViewModel.updatePosts() [inlined]:SharedViewModel.swift">
       </ContextState>
       <ContextState
+         contextName = "specialized LocalNotificationsService.addNotification(title:text:hour:minute:):LocalNotificationsService.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "UNUserNotificationCenter.current()">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "ProfileCoordinator.showForgotLogin():ProfileCoordinator.swift">
          <PersistentStrings>
             <PersistentString
@@ -70,10 +78,10 @@
          contextName = "closure #1 in static NetworkService.requestJSONSerialization(url:completion:):NetworkService.swift">
          <PersistentStrings>
             <PersistentString
-               value = "json[&apos;title&apos;]">
+               value = "json as? Todos">
             </PersistentString>
             <PersistentString
-               value = "json as? Todos">
+               value = "json[&apos;title&apos;]">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
