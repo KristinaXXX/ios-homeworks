@@ -125,6 +125,7 @@ class LogInViewController: UIViewController {
     private lazy var logInButton = CustomButton(title: NSLocalizedString("Log In", comment: ""), buttonAction: ( { self.logInButtonPressed() } ))
     private lazy var signUpButton = CustomButton(title: NSLocalizedString("Sign Up", comment: ""), buttonAction: ( { self.signUpButtonPressed() } ))
     private lazy var brutForceButton = CustomButton(title: NSLocalizedString("Brute force", comment: ""), buttonAction: ( { self.brutForceButtonPressed() } ))
+    private lazy var logInBiometricsButton = CustomButton(title: NSLocalizedString("Log In Face ID", comment: ""), buttonAction: ( { self.logInBiometricsButtonPressed() } ))
     
     private lazy var activityIndicator: UIActivityIndicatorView = {
         let activity = UIActivityIndicatorView()
@@ -234,6 +235,7 @@ class LogInViewController: UIViewController {
         
         stackButtons.addArrangedSubview(logInButton)
         stackButtons.addArrangedSubview(signUpButton)
+        stackButtons.addArrangedSubview(logInBiometricsButton)
             
         NSLayoutConstraint.activate([
             logoImage.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 100.0),
@@ -253,7 +255,7 @@ class LogInViewController: UIViewController {
             stackButtons.topAnchor.constraint(equalTo: stackUserData.bottomAnchor, constant: 16.0),
             stackButtons.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16.0),
             stackButtons.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16.0),
-            stackButtons.heightAnchor.constraint(equalToConstant: 100)
+            stackButtons.heightAnchor.constraint(equalToConstant: 150)
         ])
 
         contentView.subviews.last?.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
@@ -279,6 +281,10 @@ class LogInViewController: UIViewController {
     }
     func signUpButtonPressed() {
         profileViewModel.sighUp(userInfo: userInfo)
+    }
+    
+    func logInBiometricsButtonPressed() {
+        profileViewModel.logInFaceID()
     }
     
     func brutForceButtonPressed() {

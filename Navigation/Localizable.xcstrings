@@ -122,6 +122,9 @@
         }
       }
     },
+    "Log In Face ID" : {
+
+    },
     "OK" : {
       "comment" : "Default action",
       "localizations" : {

@@ -13,6 +13,7 @@ final class ProfileViewModel {
     private let coordinator: ProfileCoordinatorProtocol
     var loginDelegate: LoginViewControllerDelegate?
     let userService = TestUserService()
+    let localAuthorizationService = LocalAuthorizationService.shared
     
     
     init(coordinator: ProfileCoordinatorProtocol) {
@@ -50,6 +51,20 @@ final class ProfileViewModel {
                     let user = User(email: fireBaseUser.user.email!)
                     self?.coordinator.showProfile(user: user)
                 case.failure(let error):
+                    self?.coordinator.showFailLogin(text: error.localizedDescription)
+                }
+            }
+        }
+    }
+    
+    func logInFaceID() {
+        localAuthorizationService.authorizeIfPossible { [weak self] result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(_):
+                    let user = User(email: "test@mail.ru")
+                    self?.coordinator.showProfile(user: user)
+                case .failure(let error):
                     self?.coordinator.showFailLogin(text: error.localizedDescription)
                 }
             }
