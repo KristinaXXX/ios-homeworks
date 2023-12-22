@@ -122,6 +122,16 @@
         }
       }
     },
+    "Log In Face ID" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Войти по Face ID"
+          }
+        }
+      }
+    },
     "OK" : {
       "comment" : "Default action",
       "localizations" : {
