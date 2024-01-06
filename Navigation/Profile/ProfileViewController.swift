@@ -7,6 +7,7 @@
 
 import UIKit
 import StorageService
+import MobileCoreServices
 
 class ProfileViewController: UIViewController {
 
@@ -31,6 +32,8 @@ class ProfileViewController: UIViewController {
         tableView.register(ProfileHeaderView.self, forHeaderFooterViewReuseIdentifier: ProfileHeaderView.id)
         tableView.register(PhotosTableViewCell.self, forCellReuseIdentifier: PhotosTableViewCell.id)
         tableView.register(PostTableViewCell.self, forCellReuseIdentifier: PostTableViewCell.id)
+        
+        tableView.dragInteractionEnabled = true
         
         return tableView
     }()
@@ -68,6 +71,9 @@ class ProfileViewController: UIViewController {
     private func tuneTableView() {
         Self.postsTableView.dataSource = self
         Self.postsTableView.delegate = self
+        
+        Self.postsTableView.dragDelegate = self
+        Self.postsTableView.dropDelegate = self
     }
 }
 
@@ -86,6 +92,81 @@ extension ProfileViewController: UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return 2
+    }
+}
+
+extension ProfileViewController: UITableViewDragDelegate {
+    func tableView(_ tableView: UITableView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
+        let cellData = postData[indexPath.row]
+        let data = cellData.image.pngData()// .data(using: .utf8)
+        let itemProvider = NSItemProvider()
+        
+        itemProvider.registerDataRepresentation(forTypeIdentifier: kUTTypePlainText as String, visibility: .all) { completion in
+            completion(data, nil)
+            return nil
+        }
+        
+        let stringProvider = NSString(string: cellData.description)
+
+        return [
+            UIDragItem(itemProvider: itemProvider),
+          //  UIDragItem(itemProvider: stringProvider)
+        ]
+    }
+}
+
+extension ProfileViewController: UITableViewDropDelegate {
+    func tableView(_ tableView: UITableView, performDropWith coordinator: UITableViewDropCoordinator) {
+        let destinationIndexPath: IndexPath
+            
+        if let indexPath = coordinator.destinationIndexPath {
+            destinationIndexPath = indexPath
+        } else {
+            // Get last index path of table view.
+            let section = tableView.numberOfSections - 1
+            let row = tableView.numberOfRows(inSection: section)
+            destinationIndexPath = IndexPath(row: row, section: section)
+        }
+        
+        coordinator.session.loadObjects(ofClass: NSString.self) { items in
+            // Consume drag items.
+            let stringItems = items as! [String]
+            
+            var indexPaths = [IndexPath]()
+            for (index, item) in stringItems.enumerated() {
+                let indexPath = IndexPath(row: destinationIndexPath.row + index, section: destinationIndexPath.section)
+                //let newPost = Post(author: user.fullName, image: UIImage(data: Data( item) id: UUID())
+                //postData.append(<#T##newElement: Post##Post#>)
+                //self.model.addItem(item, at: indexPath.row)
+                indexPaths.append(indexPath)
+            }
+
+
+            tableView.insertRows(at: indexPaths, with: .automatic)
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, canHandle session: UIDropSession) -> Bool {
+        session.canLoadObjects(ofClass: NSString.self)
+    }
+    
+    func tableView(_ tableView: UITableView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UITableViewDropProposal {
+        var dropProposal = UITableViewDropProposal(operation: .cancel)
+            
+        // Accept only one drag item.
+        guard session.items.count == 1 else { return dropProposal }
+        
+        // The .move drag operation is available only for dragging within this app and while in edit mode.
+        if tableView.hasActiveDrag {
+            if tableView.isEditing {
+                dropProposal = UITableViewDropProposal(operation: .move, intent: .insertAtDestinationIndexPath)
+            }
+        } else {
+            // Drag is coming from outside the app.
+            dropProposal = UITableViewDropProposal(operation: .copy, intent: .insertAtDestinationIndexPath)
+        }
+
+        return dropProposal
     }
 }
 
