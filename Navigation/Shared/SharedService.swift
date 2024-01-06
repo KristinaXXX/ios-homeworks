@@ -28,7 +28,7 @@ final class SharedService {
             let newPost = SharedPost(context: coreDataService.backgroundContext)
             newPost.author = post.author
             newPost.description_ = post.description
-            newPost.image = post.image
+            newPost.image = ""//post.image.
             newPost.likes = post.likes
             newPost.views = post.views
             newPost.id = post.id

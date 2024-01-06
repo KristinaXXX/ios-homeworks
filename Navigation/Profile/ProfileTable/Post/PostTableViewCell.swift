@@ -134,7 +134,7 @@ class PostTableViewCell: UITableViewCell {
     func update(_ post: Post) {
         authorLabel.text = post.author
         descriptionLabel.text = post.description
-        postImage.image = UIImage(named: post.image)
+        postImage.image = post.image // UIImage(named: post.image)
         likesLabel.text = post.likes.numberOfLikes
         viewsLabel.text = post.views.numberOfViews
         isSaved = SharedService.shared.isSaved(post: post)
